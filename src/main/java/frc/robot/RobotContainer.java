@@ -10,7 +10,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.commandBaseAuto;
 import frc.robot.commands.runIntake;
 import frc.robot.commands.runIntakeReverse;
 import frc.robot.commands.runIntakeTwo;
@@ -25,8 +24,6 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import static frc.robot.Constants.*;
-import frc.robot.commands.simpleAutonomous;
-//import frc.robot.commands.commandBaseAuto;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -46,8 +43,8 @@ public class RobotContainer {
   private double turnMod = 0.4;
   
 
-  private final Command simpleAuto = new simpleAutonomous(hang, shooter, robotDrive);
-  private final Command driveBackAuto = new commandBaseAuto(hang, robotDrive, shooter);
+  //private final Command simpleAuto = new simpleAutonomous(hang, shooter, robotDrive);
+  //private final Command driveBackAuto = new commandBaseAuto(hang, robotDrive, shooter);
 
   
   //private final Command commandBaseAuto = new commandBaseAuto(robotDrive, shooter);
@@ -134,16 +131,20 @@ public class RobotContainer {
    * 
    */
   
+  /* 
   public Command getSimpleAuto() {
     return simpleAuto;//autoMidCommand;
   }
+  */
 
+  /* 
   public Command getDriveBackAuto() {
     return driveBackAuto;
   }
-
+  */
   
-  /*public Command getCommandBaseAuto() {
+  /*
+  public Command getCommandBaseAuto() {
     return commandBaseAuto;
   }
   */
