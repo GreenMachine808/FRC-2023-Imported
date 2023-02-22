@@ -165,7 +165,7 @@ public class Wheel {
     /**
      * This method calculates the optimal driveTalon settings and applies them.
      *
-     * @param azimuth -0.5 to 0.5 rotations, measured clockwise with zero being the wheel's zeroed position
+     * @param azimuth -0.5 to 0.5 rotations, measured clockwise with zero being the \xs's zeroed position
      * @param drive 0 to 1.0 in the direction of the wheel azimuth
      */
     public void set(double targetAngle, double drive) {

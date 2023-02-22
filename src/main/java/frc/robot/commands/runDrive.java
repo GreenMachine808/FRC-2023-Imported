@@ -77,7 +77,7 @@ public class runDrive extends CommandBase{
 
         Timer.delay(5);
 
-        drive.setAllAzimuth(Math.PI/2);
+        drive.setAllAzimuth(0.5);
 
         Timer.delay(5);
 
