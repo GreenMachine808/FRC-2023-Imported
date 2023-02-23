@@ -72,22 +72,21 @@ public class runDrive extends CommandBase{
         
         // timer.delay(0.5);
        
-        //THIS IS IN METERS
+        //THIS IS IN rotations.
         drive.driveSetDistance(-2);
 
         Timer.delay(5);
 
-        drive.setAllAzimuth(0.5);
+        drive.driveSetDistance(2);
 
         Timer.delay(5);
 
-        /*drive.setAllAzimuth(Math.PI*3/4);
+        drive.setAllAzimuth(0.25);
 
-        Timer.delay(2);
+        Timer.delay(5);
 
-        drive.driveSetDistance(20);
+        drive.driveSetDistance(2);
 
-        Timer.delay(3);*/
 
         /**0
          * Test: Make a program to print the value of a public number,
