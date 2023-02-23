@@ -148,7 +148,8 @@ public class Wheel {
      * @param setpoint the position in meters
      */
     public void setTargetDistance(double setpoint) {
-        driveMotor.set(ControlMode.MotionMagic, setpoint * driveTicks);
+        double rotations = setpoint * (12/Math.PI/2/1.79134);
+        driveMotor.set(ControlMode.MotionMagic, (rotations * driveTicks) + driveMotor.getSelectedSensorPosition());
         SmartDashboard.putNumber("driveSetpoint", setpoint);
         SmartDashboard.putNumber("drivePosition", driveMotor.getSelectedSensorPosition());
     } 

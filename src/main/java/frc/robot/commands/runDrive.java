@@ -74,21 +74,45 @@ public class runDrive extends CommandBase{
        //TEst
 
         //THIS IS IN rotations.
-        drive.driveSetDistance(-2);
+        drive.driveSetDistance(1);
 
-        Timer.delay(5);
+        Timer.delay(2);
 
-        drive.driveSetDistance(2);
+        drive.driveSetDistance(1);
 
-        Timer.delay(5);
+        /* 
+        Timer.delay(2);
 
         drive.setAllAzimuth(0.25);
 
-        Timer.delay(5);
+        Timer.delay(2);
 
         drive.driveSetDistance(2);
 
+        Timer.delay(2);
 
+        drive.driveSetDistance(-1);
+
+        Timer.delay(2);
+
+        drive.driveSetDistance(-2);
+
+        Timer.delay(2);
+
+        drive.setAllAzimuth(0.12);
+
+        Timer.delay(2);
+
+        drive.driveSetDistance(1);
+
+        Timer.delay(2);
+
+        drive.driveSetDistance(-1);
+
+        Timer.delay(2);
+
+        */
+        
         /**0
          * Test: Make a program to print the value of a public number,
          * and have a threa change the value of the number after a set time
