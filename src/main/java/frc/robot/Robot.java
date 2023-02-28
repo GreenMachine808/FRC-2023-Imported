@@ -67,7 +67,6 @@ public class Robot extends TimedRobot {
     
     SmartDashboard.putNumber("Speed modifier: ", robotContainer.getSpeedMod());
     SmartDashboard.putNumber("Turn modifier: ", robotContainer.getTurnMod());
-    SmartDashboard.putNumber("Compressor PSI: ", robotContainer.getPSI());
     
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     NetworkTableEntry tx = table.getEntry("tx");

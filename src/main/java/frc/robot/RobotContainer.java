@@ -16,7 +16,7 @@ import frc.robot.commands.runIntakeReverse;
 import frc.robot.commands.runIntakeTwo;
 import frc.robot.commands.runShooter;
 import frc.robot.commands.runShooterHigh;
-import frc.robot.subsystems.HangSubsystem;
+import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -35,7 +35,7 @@ import static frc.robot.Constants.*;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final SwerveSubsystem robotDrive = new SwerveSubsystem();
-  private final HangSubsystem hang = new HangSubsystem();
+  private final ArmSubsystem arm = new ArmSubsystem();
   private final ShooterSubsystem shooter = new ShooterSubsystem();
 
   private final DriveControls controls = new DriveControls();
@@ -46,7 +46,7 @@ public class RobotContainer {
 
   //private final Command simpleAuto = new simpleAutonomous(hang, shooter, robotDrive);
   //private final Command driveBackAuto = new commandBaseAuto(hang, robotDrive, shooter);
-  private final Command runDriveAuto = new runDrive(hang, shooter, robotDrive);
+  private final Command runDriveAuto = new runDrive(arm, shooter, robotDrive);
 
   
   //private final Command commandBaseAuto = new commandBaseAuto(robotDrive, shooter);
@@ -62,12 +62,6 @@ public class RobotContainer {
           modifyDriveInput(controls.getStrafe()),
           modifyTurnInput(controls.getYaw() * 0.7)), robotDrive ));
     
-    hang.setDefaultCommand(new RunCommand(() -> hang.moveElevator(controls.getElevatorAxis() * 0.5), hang));
-    /* hang.setDefaultCommand(new ParallelCommandGroup(
-        new RunCommand(() -> hang.moveElevator(controls.getElevatorAxis() * 0.5)),
-        new RunCommand(() -> hang.popWeightServo(false), hang) ));
-    */
-    hang.weightdropper.setAngle(180);
   }
 
   /**
@@ -102,9 +96,7 @@ public class RobotContainer {
       () -> robotDrive.turnSlow = true,
       () -> robotDrive.turnSlow = false ));
 
-    controls.dropElevator0_0.toggleWhenPressed(new StartEndCommand(
-      () -> hang.popWeightServo(true),
-      () -> hang.popWeightServo(false) ));
+    
 
     controls.resetDrive.whenPressed(new InstantCommand(() -> robotDrive.initDrive()) );
     
@@ -121,8 +113,7 @@ public class RobotContainer {
     controls.runIntakeReverse.whileHeld(new runIntakeReverse( shooter ));
     controls.runIntakeTwo.whileHeld(new runIntakeTwo( shooter ));
 
-    controls.elevatorState.whenPressed(new InstantCommand(
-      () -> hang.toggleElevator() ));
+    
   }
   
   /**
@@ -220,8 +211,6 @@ public class RobotContainer {
     return turnMod;
   }
 
-   public double getPSI() {
-    return hang.phCompressor.getPressure();
-  }
+   
   
 }

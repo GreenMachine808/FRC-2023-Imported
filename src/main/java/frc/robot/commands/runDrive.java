@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.subsystems.HangSubsystem;
+import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.RobotContainer;
 import frc.robot.commands.runShooter;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -20,7 +20,7 @@ public class runDrive extends CommandBase{
     
     private Timer timer = new Timer();
 
-    public runDrive(HangSubsystem hang, ShooterSubsystem shooter, SwerveSubsystem drive){
+    public runDrive(ArmSubsystem arm, ShooterSubsystem shooter, SwerveSubsystem drive){
         // this.hang = hang;
         // this.shooter = shooter;
         this.drive = drive;

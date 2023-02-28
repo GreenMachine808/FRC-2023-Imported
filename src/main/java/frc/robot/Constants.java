@@ -90,8 +90,8 @@ public final class Constants {
   }
 
 
-  public static final int LEFT_CLIMB_MOTOR = 3;
-  public static final int RIGHT_CLIMB_MOTOR = 20;
+  public static final int elevatorMotor = 10;
+  public static final int clawMotor = 11;
   
   public static final int SHOOTER_1_MOTOR = 6;
   public static final int SHOOTER_2_MOTOR = 7;
