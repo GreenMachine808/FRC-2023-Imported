@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.kauailabs.navx.frc.AHRS;
 import static frc.robot.Constants.SwerveConstants.*;
@@ -87,10 +88,9 @@ public class SwerveSubsystem extends SubsystemBase {
     if (isFieldOriented) {
       double angle = gyro.getAngle();
       SmartDashboard.putNumber("Gyro", gyro.getAngle());
-      SmartDashboard.putNumber("Z offset", gyro.getDisplacementZ());
-      SmartDashboard.putNumber("Y offset", gyro.getDisplacementY());
-      SmartDashboard.putNumber("X offset", gyro.getDisplacementX());
-
+      SmartDashboard.putNumber("Pitch", gyro.getPitch());
+      SmartDashboard.putNumber("Yaw", gyro.getYaw());
+      SmartDashboard.putNumber("Roll", gyro.getRoll());
 
       angle += gyro.getRate();
       angle = Math.IEEEremainder(angle, 360.0);
@@ -146,33 +146,42 @@ public class SwerveSubsystem extends SubsystemBase {
    * Set the wheels at a given target angle
    * @param angle the target angle for all swerve modules
    */
-  public void setAllAzimuth(double angle) {
+  public void setAllAzimuth(double angle, double delay) {
     for (Wheel wheel : wheels) {
       wheel.setTargetAngle(angle);
     }
+    Timer.delay(delay);
   }
 
   /**
    * Drive a set distance
    * @param distance the target distance for the modules to drive
    */
-  public void driveSetDistance(double distance) {
+  public void driveSetDistance(double distance, double delay) {
     for (Wheel wheel : wheels) {
       wheel.setTargetDistance(distance);
     }
   }
 
   public void gyroBalance() {
-    for (Wheel wheel : wheels) {
-      while(gyro.getDisplacementZ() > 0) {
-        //
+      while(gyro.getRoll() > -4 + 3) {
+        drive(-0.2, 0, 0);
       }
-    }
+      while(gyro.getRoll() < -4 - 3) {
+        drive(0.2, 0, 0);
+      }
+      while(gyro.getPitch() > 0 + 3) {
+        drive(0, -0.2, 0);
+      }
+      while(gyro.getPitch() < 0 - 3) {
+        drive(0, 0.2, 0);
+      }
+      drive(0, 0, 0);
   }
 
   /**
    * Stop all Swerve Modules
-   */
+  */
   public void stop() {
     for (Wheel wheel : wheels) {
       wheel.stop();

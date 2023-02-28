@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.Timer;
 import com.kauailabs.navx.frc.AHRS;
 
 public class runDrive extends CommandBase{
-    // private HangSubsystem hang;
+    // private ArmSubsystem arm;
     // private ShooterSubsystem shooter;
     private SwerveSubsystem drive;
     private RobotContainer robotContainer;
@@ -75,66 +75,32 @@ public class runDrive extends CommandBase{
        //TEst
 
         //THIS IS IN increments of about 2.5 inches.
-        drive.driveSetDistance(6);
+        drive.driveSetDistance(2, 2);
 
-        Timer.delay(2);
+        drive.setAllAzimuth(270, 2);
 
-        drive.setAllAzimuth(270);
+        drive.driveSetDistance(2, 2);
 
-        Timer.delay(2);
+        drive.setAllAzimuth(180, 2);
 
-        drive.driveSetDistance(6);
+        drive.driveSetDistance(2, 2);
 
-        Timer.delay(2);
+        drive.setAllAzimuth(90, 2);
 
-        drive.setAllAzimuth(180);
+        drive.driveSetDistance(2, 2);
 
-        Timer.delay(2);
+        drive.setAllAzimuth(0, 2);
 
-        drive.driveSetDistance(6);
+        drive.driveSetDistance(-2, 2);
 
-        Timer.delay(2);
+        drive.setAllAzimuth(90, 2);
 
-        drive.setAllAzimuth(90);
+        drive.driveSetDistance(2, 2);
 
-        Timer.delay(2);
+        drive.setAllAzimuth(315, 2);
 
-        drive.driveSetDistance(6);
-
-        Timer.delay(2);
-
-        drive.setAllAzimuth(0);
-
-        Timer.delay(2);
-
-        drive.driveSetDistance(-6);
-
-        Timer.delay(2);
-
-        drive.setAllAzimuth(90);
-
-        Timer.delay(2);
-
-        drive.driveSetDistance(10);
-
-        Timer.delay(2);
-
-        drive.setAllAzimuth(315);
-
-        Timer.delay(2);
-
-        drive.driveSetDistance(6);
-
-        Timer.delay(2);
-
-
-
-
-
-        
-
-
-        
+        drive.driveSetDistance(2, 2);
+ 
         /**0
          * Test: Make a program to print the value of a public number,
          * and have a threa change the value of the number after a set time
