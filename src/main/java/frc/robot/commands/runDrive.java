@@ -10,6 +10,7 @@ import frc.robot.commands.runShooter;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 import edu.wpi.first.wpilibj.Timer;
+import com.kauailabs.navx.frc.AHRS;
 
 public class runDrive extends CommandBase{
     // private HangSubsystem hang;
@@ -73,45 +74,66 @@ public class runDrive extends CommandBase{
         // timer.delay(0.5);
        //TEst
 
-        //THIS IS IN rotations.
-        drive.driveSetDistance(1);
+        //THIS IS IN increments of about 2.5 inches.
+        drive.driveSetDistance(6);
 
         Timer.delay(2);
 
-        drive.driveSetDistance(1);
-
-        /* 
-        Timer.delay(2);
-
-        drive.setAllAzimuth(0.25);
+        drive.setAllAzimuth(270);
 
         Timer.delay(2);
 
-        drive.driveSetDistance(2);
+        drive.driveSetDistance(6);
 
         Timer.delay(2);
 
-        drive.driveSetDistance(-1);
+        drive.setAllAzimuth(180);
 
         Timer.delay(2);
 
-        drive.driveSetDistance(-2);
+        drive.driveSetDistance(6);
 
         Timer.delay(2);
 
-        drive.setAllAzimuth(0.12);
+        drive.setAllAzimuth(90);
 
         Timer.delay(2);
 
-        drive.driveSetDistance(1);
+        drive.driveSetDistance(6);
 
         Timer.delay(2);
 
-        drive.driveSetDistance(-1);
+        drive.setAllAzimuth(0);
 
         Timer.delay(2);
 
-        */
+        drive.driveSetDistance(-6);
+
+        Timer.delay(2);
+
+        drive.setAllAzimuth(90);
+
+        Timer.delay(2);
+
+        drive.driveSetDistance(10);
+
+        Timer.delay(2);
+
+        drive.setAllAzimuth(315);
+
+        Timer.delay(2);
+
+        drive.driveSetDistance(6);
+
+        Timer.delay(2);
+
+
+
+
+
+        
+
+
         
         /**0
          * Test: Make a program to print the value of a public number,
