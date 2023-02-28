@@ -10,6 +10,9 @@ package frc.robot.subsystems;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax;
 import static frc.robot.Constants.SwerveConstants.*;
+
+import javax.swing.RootPaneContainer;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANSparkMax.ControlType;
@@ -136,7 +139,7 @@ public class Wheel {
         double currentPosition = ((azimuthEncoder.getValue() * 360.0 / 4049.0));
         currentPosition =  currentPosition > 180.0 ? currentPosition - 360.0 : currentPosition;
         currentPosition = currentPosition == 360 ? 0 : currentPosition; // Making 360 deg and 0 deg equal
-        angle *= 360; // flip azimuth, hardware configuration dependent
+        //angle *= 360; // flip azimuth, hardware configuration dependent
 
         double azimuthError = Math.IEEEremainder(currentPosition - angle, 360.0);
         azimuthPIDController.setReference(azimuthError / 360.0 * 18 + azimuthMotor.getEncoder().getPosition() + (offsetAngle / 360.0 * 18), ControlType.kSmartMotion);
@@ -148,9 +151,11 @@ public class Wheel {
      * @param setpoint the position in meters
      */
     public void setTargetDistance(double setpoint) {
-        double rotations = setpoint * (12/Math.PI/2/1.79134);
+        double rotations = setpoint * (12/(Math.PI*2*1.79134));
         driveMotor.set(ControlMode.MotionMagic, (rotations * driveTicks) + driveMotor.getSelectedSensorPosition());
-        SmartDashboard.putNumber("driveSetpoint", setpoint);
+        SmartDashboard.putNumber("driveSetpoint (feet)", setpoint);
+        SmartDashboard.putNumber("driveSetpoint (rotations)", rotations);
+        SmartDashboard.putNumber("driveSetpoint (encoder ticks)", rotations * driveTicks);
         SmartDashboard.putNumber("drivePosition", driveMotor.getSelectedSensorPosition());
     } 
 

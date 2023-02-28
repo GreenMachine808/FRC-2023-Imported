@@ -87,6 +87,10 @@ public class SwerveSubsystem extends SubsystemBase {
     if (isFieldOriented) {
       double angle = gyro.getAngle();
       SmartDashboard.putNumber("Gyro", gyro.getAngle());
+      SmartDashboard.putNumber("Z offset", gyro.getDisplacementZ());
+      SmartDashboard.putNumber("Y offset", gyro.getDisplacementY());
+      SmartDashboard.putNumber("X offset", gyro.getDisplacementX());
+
 
       angle += gyro.getRate();
       angle = Math.IEEEremainder(angle, 360.0);
@@ -155,6 +159,14 @@ public class SwerveSubsystem extends SubsystemBase {
   public void driveSetDistance(double distance) {
     for (Wheel wheel : wheels) {
       wheel.setTargetDistance(distance);
+    }
+  }
+
+  public void gyroBalance() {
+    for (Wheel wheel : wheels) {
+      while(gyro.getDisplacementZ() > 0) {
+        //
+      }
     }
   }
 
