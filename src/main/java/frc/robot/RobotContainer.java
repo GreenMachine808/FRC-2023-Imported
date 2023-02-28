@@ -77,10 +77,10 @@ public class RobotContainer {
     // 2. SmartDashboard data so that sprinting displayes as toggled
 
     //Make this a .whenHeld? Want to make this consistant?
-    controls.fastDriveMode.whileHeld(new StartEndCommand(
+    controls.fastDriveMode.whileTrue(new StartEndCommand(
       () -> robotDrive.runSprint = true,
       () -> robotDrive.runSprint = false ));
-    controls.slowDriveMode.whileHeld(new StartEndCommand(
+    controls.slowDriveMode.whileTrue(new StartEndCommand(
       () -> robotDrive.runSlow = true, 
       () -> robotDrive.runSlow = false ));
     /* controls.fullDriveMode.toggleWhenPressed(new StartEndCommand(
@@ -92,13 +92,13 @@ public class RobotContainer {
       () -> robotDrive.turnSprint = true, 
       () -> robotDrive.turnSprint = false ));
       */
-    controls.slowTurnMode.toggleWhenPressed(new StartEndCommand(
+    controls.slowTurnMode.toggleOnTrue(new StartEndCommand(
       () -> robotDrive.turnSlow = true,
       () -> robotDrive.turnSlow = false ));
 
     
 
-    controls.resetDrive.whenPressed(new InstantCommand(() -> robotDrive.initDrive()) );
+    controls.resetDrive.onTrue(new InstantCommand(() -> robotDrive.initDrive()) );
     
 
     /* controls.dropElevator0_0.whileHeld(new RunCommand(
@@ -106,12 +106,14 @@ public class RobotContainer {
     */
     //Should we change this to a more convenient button?
     
-    controls.shooter.whileHeld((new runShooter( shooter ) ));
-    controls.shooterHigh.whileHeld(new runShooterHigh( shooter ));
+    /* controls.shooter.whileTrue((new runShooter( shooter ) ));
+    controls.shooterHigh.whileTrue(new runShooterHigh( shooter ));
 
-    controls.runIntakeForward.whileHeld(new runIntake( shooter ));
-    controls.runIntakeReverse.whileHeld(new runIntakeReverse( shooter ));
-    controls.runIntakeTwo.whileHeld(new runIntakeTwo( shooter ));
+    controls.runIntakeForward.whileTrue(new runIntake( shooter ));
+    controls.runIntakeReverse.whileTrue(new runIntakeReverse( shooter ));
+    controls.runIntakeTwo.whileTrue(new runIntakeTwo( shooter ));
+
+    */
 
     
   }
