@@ -106,12 +106,14 @@ public class RobotContainer {
     */
     //Should we change this to a more convenient button?
     
-    controls.shooter.whileTrue((new runShooter( shooter ) ));
+    /* controls.shooter.whileTrue((new runShooter( shooter ) ));
     controls.shooterHigh.whileTrue(new runShooterHigh( shooter ));
 
     controls.runIntakeForward.whileTrue(new runIntake( shooter ));
     controls.runIntakeReverse.whileTrue(new runIntakeReverse( shooter ));
     controls.runIntakeTwo.whileTrue(new runIntakeTwo( shooter ));
+
+    */
 
     controls.makeWheelsSideways.onTrue(new InstantCommand(() -> robotDrive.setAllAzimuth(90, 0)));
 

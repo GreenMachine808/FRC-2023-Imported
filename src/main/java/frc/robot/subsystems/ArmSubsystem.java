@@ -4,26 +4,17 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.Servo;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.motorcontrol.Talon;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import static frc.robot.Constants.*;
-import edu.wpi.first.wpilibj.Compressor;
+import static frc.robot.Constants.clawMotor;
+import static frc.robot.Constants.elevatorMotor;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ArmSubsystem extends SubsystemBase {
 
@@ -40,11 +31,68 @@ public class ArmSubsystem extends SubsystemBase {
     elevator = new WPI_TalonFX(elevatorMotor, "elevator");
     claw = new WPI_TalonFX(clawMotor, "claw");
     //weightdropper = new Servo(WEIGHT_DROPPER_CHANNEL);
-    final TalonFXInvertType kFxInvertType = TalonFXInvertType.CounterClockwise;
-    final NeutralMode kBrakeDurNeutral = NeutralMode.Coast;
+   /*
+	 * Talon FX has 2048 units per revolution
+	 * 
+	 * https://phoenix-documentation.readthedocs.io/en/latest/ch14_MCSensor.html#sensor-resolution
+	 */
+	final int kUnitsPerRevolution = 2048; /* this is constant for Talon FX */
+
+	/**
+	 * Decide if positive motor-output/sensor-velocity should be when motor spins
+	 * clockwise or counter-clockwise.
+	 */
+	final TalonFXInvertType kInvertType = TalonFXInvertType.CounterClockwise; // <<< What direction you want "forward/up" to be.
+
+	/** electic brake during neutral */
+	final NeutralMode kBrakeDurNeutral = NeutralMode.Brake;
+  final NeutralMode kCoastDurNeutral = NeutralMode.Coast;
 
 
+    /** print every few loops */
+	int _loops = 0;
 
+	/* newer config API */
+  TalonFXConfiguration configs = new TalonFXConfiguration();
+  /* select integ-sensor for PID0 (it doesn't matter if PID is actually used) */
+  configs.primaryPID.selectedFeedbackSensor = FeedbackDevice.IntegratedSensor;
+  /* config all the settings */
+  elevator.configAllSettings(configs);
+  claw.configAllSettings(configs);
+
+    /*
+		 * status frame rate - user can speed up the position/velocity reporting if need
+		 * be.
+		 * https://phoenix-documentation.readthedocs.io/en/latest/ch18_CommonAPI.html#
+		 * status-groups Keep an eye on the CAN bus utilization in the DriverStation if
+		 * this is used.
+		 * https://phoenix-documentation.readthedocs.io/en/latest/ch18_CommonAPI.html#
+		 * can-bus-utilization-error-metrics
+		 */
+		elevator.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
+    claw.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
+
+
+		/*
+		 * choose which direction motor should spin during positive
+		 * motor-output/sensor-velocity. Note setInverted also takes classic true/false
+		 * as an input.
+		 */
+		elevator.setInverted(kInvertType);
+    claw.setInverted(kInvertType);
+
+		/*
+		 * Talon FX does not need sensor phase set for its integrated sensor
+		 * This is because it will always be correct if the selected feedback device is integrated sensor (default value)
+		 * and the user calls getSelectedSensor* to get the sensor's position/velocity.
+		 * 
+		 * https://phoenix-documentation.readthedocs.io/en/latest/ch14_MCSensor.html#sensor-phase
+		 */
+		//_talon.setSensorPhase(true);
+
+		/* brake or coast during neutral */
+		elevator.setNeutralMode(kBrakeDurNeutral);
+    claw.setNeutralMode(kBrakeDurNeutral);
   }
 
   
