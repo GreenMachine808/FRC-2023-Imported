@@ -126,4 +126,9 @@ public final class Constants {
   public static final double fullSpeed = 1;
 
   public static final double normalTurn = 0.4;
+
+
+//Arm TalonFX Constants
+  public static final int kUnitsPerRevolution = 2048; /* this is constant for Talon FX */
+
 }

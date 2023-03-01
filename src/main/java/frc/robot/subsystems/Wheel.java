@@ -155,7 +155,7 @@ public class Wheel {
         driveMotor.set(ControlMode.MotionMagic, (rotations * driveTicks) + driveMotor.getSelectedSensorPosition());
         SmartDashboard.putNumber("driveSetpoint (feet)", setpoint);
         SmartDashboard.putNumber("driveSetpoint (rotations)", rotations);
-        SmartDashboard.putNumber("driveSetpoint (encoder ticks)", rotations * driveTicks);
+        SmartDashboard.putNumber("driveSetpoint (encoder ticks)", (rotations * driveTicks) + driveMotor.getSelectedSensorPosition());
         SmartDashboard.putNumber("drivePosition", driveMotor.getSelectedSensorPosition());
     } 
 

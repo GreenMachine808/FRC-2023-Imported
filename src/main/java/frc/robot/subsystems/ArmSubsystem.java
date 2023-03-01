@@ -6,7 +6,9 @@ package frc.robot.subsystems;
 
 import static frc.robot.Constants.clawMotor;
 import static frc.robot.Constants.elevatorMotor;
+import static frc.robot.Constants.kUnitsPerRevolution;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
@@ -14,6 +16,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ArmSubsystem extends SubsystemBase {
@@ -36,7 +39,6 @@ public class ArmSubsystem extends SubsystemBase {
 	 * 
 	 * https://phoenix-documentation.readthedocs.io/en/latest/ch14_MCSensor.html#sensor-resolution
 	 */
-	final int kUnitsPerRevolution = 2048; /* this is constant for Talon FX */
 
 	/**
 	 * Decide if positive motor-output/sensor-velocity should be when motor spins
@@ -93,6 +95,20 @@ public class ArmSubsystem extends SubsystemBase {
 		/* brake or coast during neutral */
 		elevator.setNeutralMode(kBrakeDurNeutral);
     claw.setNeutralMode(kBrakeDurNeutral);
+
+	
+
+	}
+	public void setArmPosition(double setPos) {
+		/* 
+		Conversion for lateral Set Position to added rotations needed to achieve correct position
+		double rotations = (latSetPos / Math.PI) / (12* Math.cos(Math.toRadians(degrees)) * diameter of wheel);
+		*/
+		double rawPos = setPos * kUnitsPerRevolution;
+        elevator.set(ControlMode.MotionMagic, rawPos);
+        SmartDashboard.putNumber("armSetpoint (rotations)", setPos);
+        SmartDashboard.putNumber("armSetpoint (encoder ticks)", (setPos * kUnitsPerRevolution));
+        SmartDashboard.putNumber("armPosition", elevator.getSelectedSensorPosition());
   }
 
   
