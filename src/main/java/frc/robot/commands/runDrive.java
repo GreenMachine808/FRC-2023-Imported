@@ -74,7 +74,17 @@ public class runDrive extends CommandBase{
         // timer.delay(0.5);
        //TEst
 
-        //THIS IS IN increments of about 2.5 inches.
+        drive.drive(0.1, 0, 0);
+        Timer.delay(1);
+        drive.drive(-0.1, 0, 0);
+        Timer.delay(1);
+        drive.drive(0, 0.1, 0);
+        Timer.delay(1);
+        drive.drive(0, -0.1, 0);
+        Timer.delay(1);
+
+        /*
+        For some reason it goes a really small distance
         drive.driveSetDistance(2, 2);
 
         drive.setAllAzimuth(270, 2);
@@ -100,6 +110,8 @@ public class runDrive extends CommandBase{
         drive.setAllAzimuth(315, 2);
 
         drive.driveSetDistance(2, 2);
+
+        drive.driveSetDistance(10, 4); */
  
         /**0
          * Test: Make a program to print the value of a public number,
