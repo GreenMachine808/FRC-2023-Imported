@@ -164,19 +164,45 @@ public class SwerveSubsystem extends SubsystemBase {
   }
 
   public void gyroBalance() {
-      while(gyro.getRoll() > -4 + 3) {
-        drive(-0.2, 0, 0);
+    double xVelocity = 0;
+    double yVelocity = 0;
+
+    if (gyro.getRoll() > -4 + 3) {
+      xVelocity = -0.1;
+    }
+    else if (gyro.getRoll() < -4 - 3) {
+      xVelocity = 0.1;
+    }
+    if (gyro.getPitch() > 3) {
+      yVelocity = -0.1;
+    }
+    else if (gyro.getPitch() < -3) {
+      yVelocity = 0.1;
+    }
+    drive(xVelocity, yVelocity, 0);
+  }
+
+  public void gyroBalanceAuto(double timeout) {
+    double xVelocity = 0;
+    double yVelocity = 0;
+    long timeStamp = System.currentTimeMillis();
+
+    do {
+      if (gyro.getRoll() > -4 + 3) {
+        xVelocity = -0.1;
       }
-      while(gyro.getRoll() < -4 - 3) {
-        drive(0.2, 0, 0);
+      while (gyro.getRoll() < -4 - 3) {
+        xVelocity = 0.1;
       }
-      while(gyro.getPitch() > 0 + 3) {
-        drive(0, -0.2, 0);
+      while (gyro.getPitch() > 3) {
+        yVelocity = -0.1;
       }
-      while(gyro.getPitch() < 0 - 3) {
-        drive(0, 0.2, 0);
+      while (gyro.getPitch() < -3) {
+        yVelocity = 0.1;
       }
-      drive(0, 0, 0);
+      drive(xVelocity, yVelocity, 0);
+    } 
+    while (xVelocity != 0 && yVelocity != 0 && System.currentTimeMillis() < timeStamp + timeout*1000);
   }
 
   /**

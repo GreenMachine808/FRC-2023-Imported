@@ -45,6 +45,6 @@ public class DriveControls {
   public final JoystickButton resetDrive = new JoystickButton(joystick2, 11);
 
   public final JoystickButton makeWheelsSideways = new JoystickButton(joystick0, 11);
-  public final JoystickButton balanceIt = new JoystickButton(joystick0, 10);
+  public final JoystickButton balanceRobot = new JoystickButton(joystick0, 10);
   
 }
