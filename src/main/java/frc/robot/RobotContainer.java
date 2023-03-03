@@ -129,8 +129,8 @@ public class RobotContainer {
 
     controls.makeWheelsSideways.onTrue(new InstantCommand(() -> robotDrive.setAllAzimuth(90, 0)));
 
-    controls.balanceRoboForward.whileTrue(new RunCommand(() -> robotDrive.gyroBalance(0)));
-    controls.balanceRobotBackward.whileTrue(new RunCommand(() -> robotDrive.gyroBalance(-1)));
+    controls.balanceRobotForward.whileTrue(new RunCommand(() -> robotDrive.gyroBalance(false)));
+    controls.balanceRobotBackward.whileTrue(new RunCommand(() -> robotDrive.gyroBalance(true)));
     
   }
   

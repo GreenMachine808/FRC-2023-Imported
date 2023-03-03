@@ -148,7 +148,7 @@ public class SwerveSubsystem extends SubsystemBase {
    */
   public void setAllAzimuth(double angle, double delay) {
     for (Wheel wheel : wheels) {
-      wheel.setTargetAngle(angle);
+      wheel.setTargetAngle(angle - gyro.getAngle());
     }
     Timer.delay(delay);
   }
@@ -163,26 +163,29 @@ public class SwerveSubsystem extends SubsystemBase {
     }
   }
 
-  public void gyroBalance(int i) {
+  public void gyroBalance(boolean isBackwards) {
     double xVelocity = 0;
-    double yVelocity = 0;
+    xVelocity = isBackwards ? -1 : 1;
 
     if (gyro.getRoll() > -4 + 3) {
-      xVelocity = -0.1;
+      xVelocity *= 0.08;
     }
     else if (gyro.getRoll() < -4 - 3) {
-      xVelocity = 0.1;
+      xVelocity *= -0.08;
     }
-    if (gyro.getPitch() > 3) {
-      yVelocity = -0.1;
+    else if (gyro.getPitch() > 3) {
+      xVelocity *= 0.08;
     }
     else if (gyro.getPitch() < -3) {
-      yVelocity = 0.1;
+      xVelocity *= -0.08;
     }
-    drive(xVelocity, yVelocity, 0);
+    else {
+      xVelocity = 0;
+    }
+    drive(xVelocity, 0, 0);
   }
 
-  public void gyroBalanceAuto(int multiplier, double timeout) {
+  public void gyroBalanceAuto(double timeout) {
     double xVelocity = 0;
     double yVelocity = 0;
     long timeStamp = System.currentTimeMillis();
@@ -190,17 +193,21 @@ public class SwerveSubsystem extends SubsystemBase {
     do {
       if (gyro.getRoll() > -4 + 3)
         xVelocity = -0.1;
-      if (gyro.getRoll() < -4 - 3) 
+      else if (gyro.getRoll() < -4 - 3) 
         xVelocity = 0.1;
+      else
+        xVelocity = 0;
       if (gyro.getPitch() > 3) 
         yVelocity = 0.1;
-      if (gyro.getPitch() < -3) 
+      else if (gyro.getPitch() < -3) 
         yVelocity = -0.1;
+      else 
+        yVelocity = 0;
       if (gyro.getYaw() > 90 || gyro.getYaw() < -90)
         xVelocity *= -1;
       if (gyro.getYaw() / Math.abs(gyro.getYaw()) == -1)
         yVelocity *= -1;
-    
+      
       drive(xVelocity, yVelocity, 0);
     } 
     while (xVelocity != 0 && yVelocity != 0 && System.currentTimeMillis() < timeStamp + timeout*1000);
