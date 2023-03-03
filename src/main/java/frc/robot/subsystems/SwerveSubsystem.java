@@ -164,25 +164,24 @@ public class SwerveSubsystem extends SubsystemBase {
   }
 
   public void gyroBalance(boolean isBackwards) {
-    double xVelocity = 0;
-    xVelocity = isBackwards ? -1 : 1;
+    double yVelocity = isBackwards ? -1 : 1;
 
     if (gyro.getRoll() > -4 + 3) {
-      xVelocity *= 0.08;
+      yVelocity *= 0.08;
     }
     else if (gyro.getRoll() < -4 - 3) {
-      xVelocity *= -0.08;
+      yVelocity *= -0.08;
     }
     else if (gyro.getPitch() > 3) {
-      xVelocity *= 0.08;
+      yVelocity *= 0.08;
     }
     else if (gyro.getPitch() < -3) {
-      xVelocity *= -0.08;
+      yVelocity *= -0.08;
     }
     else {
-      xVelocity = 0;
+      yVelocity = 0;
     }
-    drive(xVelocity, 0, 0);
+    drive(yVelocity, 0, 0);
   }
 
   public void gyroBalanceAuto(double timeout) {
@@ -192,21 +191,17 @@ public class SwerveSubsystem extends SubsystemBase {
 
     do {
       if (gyro.getRoll() > -4 + 3)
-        xVelocity = -0.1;
+        xVelocity = 0.08;
       else if (gyro.getRoll() < -4 - 3) 
-        xVelocity = 0.1;
+        xVelocity = -0.08;
       else
         xVelocity = 0;
       if (gyro.getPitch() > 3) 
-        yVelocity = 0.1;
+        yVelocity = -0.08;
       else if (gyro.getPitch() < -3) 
-        yVelocity = -0.1;
+        yVelocity = 0.08;
       else 
         yVelocity = 0;
-      if (gyro.getYaw() > 90 || gyro.getYaw() < -90)
-        xVelocity *= -1;
-      if (gyro.getYaw() / Math.abs(gyro.getYaw()) == -1)
-        yVelocity *= -1;
       
       drive(xVelocity, yVelocity, 0);
     } 
