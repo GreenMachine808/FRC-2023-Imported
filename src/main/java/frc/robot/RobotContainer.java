@@ -99,6 +99,18 @@ public class RobotContainer {
     
 
     controls.resetDrive.onTrue(new InstantCommand(() -> robotDrive.initDrive()) );
+
+    controls.elevatorLow.onTrue(new InstantCommand(() -> arm.setArmPosition(0)).andThen(new InstantCommand(() -> arm.clawOpen())) );
+    controls.elevatorMid.onTrue(new InstantCommand(() -> arm.setArmPosition(2)).andThen(new InstantCommand(() -> arm.clawOpen())) );
+    controls.elevatorHigh.onTrue(new InstantCommand(() -> arm.setArmPosition(4)).andThen(new InstantCommand(() -> arm.clawOpen())) );
+    
+    controls.elevatorRetract.onTrue(new InstantCommand(() -> arm.setArmPosition(0)));
+
+    controls.clawClose.onTrue(new InstantCommand(() -> arm.clawClose()));
+    controls.clawOpen.onTrue(new InstantCommand(() -> arm.clawOpen()));
+
+
+
     
 
     /* controls.dropElevator0_0.whileHeld(new RunCommand(

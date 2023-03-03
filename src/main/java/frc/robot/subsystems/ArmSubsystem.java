@@ -99,20 +99,26 @@ public class ArmSubsystem extends SubsystemBase {
 	
 
 	}
-	public void setArmPosition(double setPos) {
-		/* 
-		Conversion for lateral Set Position to added rotations needed to achieve correct position
-		double rotations = (latSetPos / Math.PI) / (12* Math.cos(Math.toRadians(degrees)) * diameter of wheel);
-		*/
-		double rawPos = setPos * kUnitsPerRevolution;
+	public void setArmPosition(double latSetPos) {
+		double wheelDim = 3.013;
+		//Conversion for lateral Set Position to added rotations needed to achieve correct position
+		double rotations = (latSetPos / Math.PI) / (12 * Math.cos(Math.toRadians(18.9)) * wheelDim);
+		
+		double rawPos = ((rotations * kUnitsPerRevolution) + elevator.getSelectedSensorPosition());
         elevator.set(ControlMode.MotionMagic, rawPos);
-        SmartDashboard.putNumber("armSetpoint (rotations)", setPos);
-        SmartDashboard.putNumber("armSetpoint (encoder ticks)", (setPos * kUnitsPerRevolution));
+        SmartDashboard.putNumber("armSetpoint (rotations)", latSetPos);
+        SmartDashboard.putNumber("armSetpoint (encoder ticks)", (latSetPos * kUnitsPerRevolution));
         SmartDashboard.putNumber("armPosition", elevator.getSelectedSensorPosition());
   }
 
-  
+  public void clawOpen() {
+	claw.set(ControlMode.MotionMagic, kUnitsPerRevolution * 0.2);
+	}
 
+  public void clawClose() {
+	claw.set(ControlMode.MotionMagic, kUnitsPerRevolution * 0);
+	}
+  
   
 
   /* 
