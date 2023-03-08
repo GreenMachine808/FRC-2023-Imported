@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.runDrive;
+import frc.robot.commands.runBalance;
 import frc.robot.commands.runIntake;
 import frc.robot.commands.runIntakeReverse;
 import frc.robot.commands.runIntakeTwo;
@@ -47,6 +48,8 @@ public class RobotContainer {
   //private final Command simpleAuto = new simpleAutonomous(hang, shooter, robotDrive);
   //private final Command driveBackAuto = new commandBaseAuto(hang, robotDrive, shooter);
   private final Command runDriveAuto = new runDrive(arm, shooter, robotDrive);
+  private final Command runBalanceAuto = new runBalance(arm, shooter, robotDrive);
+
 
   
   //private final Command commandBaseAuto = new commandBaseAuto(robotDrive, shooter);
@@ -164,6 +167,9 @@ public class RobotContainer {
     return runDriveAuto;
   }
   
+  public Command getRunBalanceAuto() {
+    return runBalanceAuto;
+  }
   
 
   public double modifyDriveInput(double value) {
