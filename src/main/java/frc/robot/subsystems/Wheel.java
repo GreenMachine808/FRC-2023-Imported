@@ -146,12 +146,12 @@ public class Wheel {
     }
 
     /**
-     * Set the drive to move to a given setpoint.
+     * Set the drive to move to a certain distance (gear ratio is 5:1).
      * 
-     * @param setpoint the position in meters
+     * @param setpoint the distance in feet
      */
     public void setTargetDistance(double setpoint) {
-        double rotations = (setpoint / Math.PI) / (12*3.58268);
+        double rotations = setpoint * 12 * 5 / (Math.PI * 3.25);
         driveMotor.set(ControlMode.MotionMagic, (rotations * driveTicks) + driveMotor.getSelectedSensorPosition());
         SmartDashboard.putNumber("driveSetpoint (feet)", setpoint);
         SmartDashboard.putNumber("driveSetpoint (rotations)", rotations);
