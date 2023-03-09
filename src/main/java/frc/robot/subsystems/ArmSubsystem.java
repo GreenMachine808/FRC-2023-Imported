@@ -102,9 +102,10 @@ public class ArmSubsystem extends SubsystemBase {
 	public void setArmPosition(double latSetPos) {
 		double wheelDim = 3.013;
 		//Conversion for lateral Set Position to added rotations needed to achieve correct position
-		double rotations = (latSetPos / Math.PI) / (12 * Math.cos(Math.toRadians(18.9)) * wheelDim);
+		//double rotations = (latSetPos / Math.PI) / (12 * Math.cos(Math.toRadians(18.9)) * wheelDim);
+		double rotations = (latSetPos / Math.cos(Math.toRadians(18.9))) / 12 * (wheelDim * Math.PI);
 		
-		double rawPos = ((rotations * kUnitsPerRevolution) + elevator.getSelectedSensorPosition());
+		double rawPos = (rotations * kUnitsPerRevolution);
         elevator.set(ControlMode.MotionMagic, rawPos);
         SmartDashboard.putNumber("armSetpoint (rotations)", latSetPos);
         SmartDashboard.putNumber("armSetpoint (encoder ticks)", (latSetPos * kUnitsPerRevolution));
