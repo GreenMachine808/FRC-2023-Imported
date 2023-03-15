@@ -53,6 +53,7 @@ public class Robot extends TimedRobot {
    */
 
    Thread m_visionThread;
+   UsbCamera camera2;
 
   @Override
   public void robotInit() {
@@ -64,7 +65,9 @@ public class Robot extends TimedRobot {
 
     Thread visionThread = new Thread(() -> apriltagVisionThreadProc());
     visionThread.setDaemon(true);
-    visionThread.start();
+    visionThread.start(); 
+
+    camera2 = CameraServer.startAutomaticCapture(1);
 
     //auto.setDefaultOption("Simple Auto", robotContainer.getSimpleAuto());
     //auto.addOption("Drive Back Auto", robotContainer.getDriveBackAuto());
@@ -165,9 +168,9 @@ public class Robot extends TimedRobot {
     detector.addFamily("tag16h5", 0);
   
     // Get the UsbCamera from CameraServer
-    UsbCamera camera = CameraServer.startAutomaticCapture();
+    UsbCamera camera1 = CameraServer.startAutomaticCapture();
     // Set the resolution
-    camera.setResolution(640, 480);
+    camera1.setResolution(640, 480);
 
     // Get a CvSink. This will capture Mats from the camera
     CvSink cvSink = CameraServer.getVideo();

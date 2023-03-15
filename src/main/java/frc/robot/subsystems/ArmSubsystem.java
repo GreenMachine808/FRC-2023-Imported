@@ -14,7 +14,13 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.fasterxml.jackson.databind.AnnotationIntrospector.ReferenceProperty.Type;
+import com.revrobotics.CANSparkMax;
+
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -23,16 +29,17 @@ public class ArmSubsystem extends SubsystemBase {
 
   // Create variables specific to the subsystem, as well as the devices (new Motor m_motor)
   //public final DoubleSolenoid elevator;
-  public final WPI_TalonFX elevator;
-  public final WPI_TalonFX claw;
+  public final TalonSRX elevator;
+  public final CANSparkMax claw;
   //public final Servo weightdropper;
   //public final Compressor phCompressor = new Compressor(PNEUMATICSTYPE);
 
   /** Creates a new ExampleSubsystem. */
   public ArmSubsystem() {
 
-    elevator = new WPI_TalonFX(elevatorMotor, "elevator");
-    claw = new WPI_TalonFX(clawMotor, "claw");
+    elevator = new TalonSRX(elevatorMotor);
+	claw = new CANSparkMax(clawMotor, MotorType.kBrushless);
+
     //weightdropper = new Servo(WEIGHT_DROPPER_CHANNEL);
    /*
 	 * Talon FX has 2048 units per revolution
@@ -59,8 +66,8 @@ public class ArmSubsystem extends SubsystemBase {
   /* select integ-sensor for PID0 (it doesn't matter if PID is actually used) */
   configs.primaryPID.selectedFeedbackSensor = FeedbackDevice.IntegratedSensor;
   /* config all the settings */
-  elevator.configAllSettings(configs);
-  claw.configAllSettings(configs);
+  //elevator.configAllSettings(configs);
+  //claw.configAllSettings(configs);
 
     /*
 		 * status frame rate - user can speed up the position/velocity reporting if need
@@ -72,7 +79,7 @@ public class ArmSubsystem extends SubsystemBase {
 		 * can-bus-utilization-error-metrics
 		 */
 		elevator.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
-    claw.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
+    //claw.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
 
 
 		/*
@@ -80,8 +87,8 @@ public class ArmSubsystem extends SubsystemBase {
 		 * motor-output/sensor-velocity. Note setInverted also takes classic true/false
 		 * as an input.
 		 */
-		elevator.setInverted(kInvertType);
-    claw.setInverted(kInvertType);
+		//elevator.setInverted(kInvertType);
+    //claw.setInverted(kInvertType);
 
 		/*
 		 * Talon FX does not need sensor phase set for its integrated sensor
@@ -94,7 +101,7 @@ public class ArmSubsystem extends SubsystemBase {
 
 		/* brake or coast during neutral */
 		elevator.setNeutralMode(kBrakeDurNeutral);
-    claw.setNeutralMode(kBrakeDurNeutral);
+    //claw.setNeutralMode(kBrakeDurNeutral);
 
 	
 
@@ -113,11 +120,11 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public void clawOpen() {
-	claw.set(ControlMode.MotionMagic, kUnitsPerRevolution * 0.2);
+	//claw.set(ControlMode.MotionMagic, kUnitsPerRevolution * 0.2);
 	}
 
   public void clawClose() {
-	claw.set(ControlMode.MotionMagic, kUnitsPerRevolution * 0);
+	//claw.set(ControlMode.MotionMagic, kUnitsPerRevolution * 0);
 	}
   
   

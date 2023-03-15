@@ -20,7 +20,7 @@ public class DriveControls {
 
   public final JoystickButton slowDriveMode = new JoystickButton(joystick0, 5);
   public final JoystickButton fastDriveMode = new JoystickButton(joystick0, 2);
-  public final JoystickButton fullDriveMode = new JoystickButton(joystick0, 7);
+  public final JoystickButton fullDriveMode = new JoystickButton(joystick0, 4);
 
   public final JoystickButton slowTurnMode = new JoystickButton(joystick1, 1);
   public final JoystickButton fastTurnMode = new JoystickButton(joystick1, 10);
