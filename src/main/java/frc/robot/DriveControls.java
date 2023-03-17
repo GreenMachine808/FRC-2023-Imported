@@ -31,19 +31,16 @@ public class DriveControls {
   public double getYaw() { return joystick1.getRawAxis(0); }
   public double getElevatorAxis() { return joystick2.getRawAxis(1); }
 
-  public final JoystickButton elevatorRetract = new JoystickButton(joystick2, 1);
+  public final JoystickButton elevatorRetract = new JoystickButton(joystick2, 3);
   public final JoystickButton elevatorLow = new JoystickButton(joystick2, 4);
   public final JoystickButton elevatorMid = new JoystickButton(joystick2, 2);
   public final JoystickButton elevatorHigh = new JoystickButton(joystick2, 5);
 
+  public final JoystickButton elevatorManualToggle = new JoystickButton(joystick2, 1);
+
   public final JoystickButton clawOpen = new JoystickButton(joystick2, 7);
   public final JoystickButton clawClose = new JoystickButton(joystick2, 6);
-
-
-  public final JoystickButton runIntakeForward = new JoystickButton(joystick1, 2);
-  public final JoystickButton runIntakeReverse = new JoystickButton(joystick1, 3);
-
-  public final JoystickButton runIntakeTwo = new JoystickButton(joystick1, 5);
+  public final JoystickButton clawStop = new JoystickButton(joystick2, 8);
  
   public final JoystickButton resetDrive = new JoystickButton(joystick2, 11);
 

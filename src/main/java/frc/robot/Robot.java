@@ -94,6 +94,8 @@ public class Robot extends TimedRobot {
     
     SmartDashboard.putNumber("Speed modifier: ", robotContainer.getSpeedMod());
     SmartDashboard.putNumber("Turn modifier: ", robotContainer.getTurnMod());
+
+    SmartDashboard.putNumber("Claw Speed", robotContainer.getClawSpeed());
     
 
     //robotContainer.getPSI();

@@ -64,8 +64,13 @@ public class RobotContainer {
           modifyDriveInput(controls.getForward()),
           modifyDriveInput(controls.getStrafe()),
           modifyTurnInput(controls.getYaw() * 0.7)), robotDrive ));
+
+    arm.setDefaultCommand(
+      new RunCommand(() -> arm.setElevatorOutput(controls.getElevatorAxis() * 0.25), arm)
+    );
     
   }
+
 
   /**
    * Use this method to define your button->command mappings.  Buttons can be created by
@@ -80,10 +85,10 @@ public class RobotContainer {
     // 2. SmartDashboard data so that sprinting displayes as toggled
 
     //Make this a .whenHeld? Want to make this consistant?
-    controls.fastDriveMode.whileTrue(new StartEndCommand(
+    controls.fastDriveMode.toggleOnTrue(new StartEndCommand(
       () -> robotDrive.runSprint = true,
       () -> robotDrive.runSprint = false ));
-    controls.slowDriveMode.whileTrue(new StartEndCommand(
+    controls.slowDriveMode.toggleOnTrue(new StartEndCommand(
       () -> robotDrive.runSlow = true, 
       () -> robotDrive.runSlow = false ));
     /* controls.fullDriveMode.toggleWhenPressed(new StartEndCommand(
@@ -99,20 +104,25 @@ public class RobotContainer {
       () -> robotDrive.turnSlow = true,
       () -> robotDrive.turnSlow = false ));
 
+
+      //controls.elevatorManualToggle.toggleOnTrue(new RunCommand(() -> arm.setElevatorOutput(controls.getElevatorAxis() * 0.25), arm));
+
     
 
     controls.resetDrive.onTrue(new InstantCommand(() -> robotDrive.initDrive()) );
 
-    controls.elevatorLow.onTrue(new InstantCommand(() -> arm.setArmPosition(0)).andThen(new InstantCommand(() -> arm.clawOpen())) );
-    controls.elevatorMid.onTrue(new InstantCommand(() -> arm.setArmPosition(2)).andThen(new InstantCommand(() -> arm.clawOpen())) );
-    controls.elevatorHigh.onTrue(new InstantCommand(() -> arm.setArmPosition(4)).andThen(new InstantCommand(() -> arm.clawOpen())) );
+    controls.elevatorLow.onTrue(new InstantCommand(() -> arm.setArmPosition(0))); //.andThen(new InstantCommand(() -> arm.clawOpen())) );
+    controls.elevatorMid.onTrue(new InstantCommand(() -> arm.setArmPosition(2))); //.andThen(new InstantCommand(() -> arm.clawOpen())) );
+    controls.elevatorHigh.onTrue(new InstantCommand(() -> arm.setArmPosition(4))); //.andThen(new InstantCommand(() -> arm.clawOpen())) );
     
     controls.elevatorRetract.onTrue(new InstantCommand(() -> arm.setArmPosition(0)));
 
-    controls.clawClose.onTrue(new InstantCommand(() -> arm.clawClose()));
-    controls.clawOpen.onTrue(new InstantCommand(() -> arm.clawOpen()));
-
-
+    controls.clawClose.toggleOnTrue(new StartEndCommand(
+      () -> arm.clawClose(),
+      () -> arm.clawStop()));
+      controls.clawOpen.toggleOnTrue(new StartEndCommand(
+        () -> arm.clawOpen(),
+        () -> arm.clawStop()));
 
     
 
@@ -233,6 +243,10 @@ public class RobotContainer {
 
   public double getTurnMod(){
     return turnMod;
+  }
+
+  public double getClawSpeed() {
+    return arm.claw.get();
   }
 
    
