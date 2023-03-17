@@ -90,9 +90,9 @@ public final class Constants {
   }
 
 
-  public static final int elevator1 = 23;
-  public static final int elevator2 = 22;
-  public static final int clawMotor = 9;
+  public static final int elevator1 = 6;
+  public static final int elevator2 = 5;
+  public static final int clawMotor = 5;
   
   public static final int SHOOTER_1_MOTOR = 6;
   public static final int SHOOTER_2_MOTOR = 7;
