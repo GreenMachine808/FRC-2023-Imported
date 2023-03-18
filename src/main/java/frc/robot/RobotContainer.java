@@ -18,6 +18,7 @@ import frc.robot.subsystems.SwerveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import static frc.robot.Constants.*;
@@ -106,19 +107,24 @@ public class RobotContainer {
 
     controls.resetDrive.onTrue(new InstantCommand(() -> robotDrive.initDrive()) );
 
-    controls.elevatorLow.onTrue(new InstantCommand(() -> arm.setArmPosition(0))); //.andThen(new InstantCommand(() -> arm.clawOpen())) );
-    controls.elevatorMid.onTrue(new InstantCommand(() -> arm.setArmPosition(2))); //.andThen(new InstantCommand(() -> arm.clawOpen())) );
-    controls.elevatorHigh.onTrue(new InstantCommand(() -> arm.setArmPosition(4))); //.andThen(new InstantCommand(() -> arm.clawOpen())) );
+    //controls.elevatorLow.onTrue(new InstantCommand(() -> arm.setArmPosition(0))); //.andThen(new InstantCommand(() -> arm.clawOpen())) );
+    //controls.elevatorMid.onTrue(new InstantCommand(() -> arm.setArmPosition(2))); //.andThen(new InstantCommand(() -> arm.clawOpen())) );
+    //controls.elevatorHigh.onTrue(new InstantCommand(() -> arm.setArmPosition(4))); //.andThen(new InstantCommand(() -> arm.clawOpen())) );
+
+    controls.elevatorManualToggle.onTrue(new InstantCommand(() -> arm.setArmPosition(1000)));
     
     controls.elevatorRetract.onTrue(new InstantCommand(() -> arm.setArmPosition(0)));
 
-    controls.clawClose.toggleOnTrue(new StartEndCommand(
+    /* controls.clawClose.toggleOnTrue(new StartEndCommand(
       () -> arm.clawClose(),
       () -> arm.clawStop()));
+      */
+    controls.clawClose.onTrue(new InstantCommand(() -> arm.clawClose()));
       
-       controls.clawOpen.toggleOnTrue(new StartEndCommand(
-        () -> arm.clawOpen(),
-        () -> arm.clawStop()));
+       //controls.clawOpen.onTrue(new RepeatCommand(new InstantCommand(
+        //() -> arm.clawOpen(true))));
+
+      controls.clawOpen.whileTrue(new StartEndCommand(() -> arm.clawOpen(true), () -> arm.clawStop()));
     
     
 

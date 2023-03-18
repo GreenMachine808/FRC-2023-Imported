@@ -102,6 +102,14 @@ public final class Constants {
   //Arm TalonFX Constants
   public static final int kUnitsPerRevolution = 2048; /* this is constant for Talon FX */
 
+  public static final double elevatorLkP = 0.2;
+  public static final double elevatorLkI = 0.0;
+  public static final double elevatorLkD = 0.0;
+  public static final double elevatorLIz = 0;
+  public static final double elevatorLkFF = 0.2;
+  public static final double elevatorLkMaxOutput = 1;
+  public static final double elevatorLkMinOutput = -1;
+
   public static final int elevator1 = 6;
   public static final int elevator2 = 5;
   public static final int clawMotor = 4;

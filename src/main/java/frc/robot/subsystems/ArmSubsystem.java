@@ -90,6 +90,26 @@ public void initElevator(){
 		elevatorL.setNeutralMode(kBrakeDurNeutral);
 		elevatorR.setNeutralMode(kBrakeDurNeutral);
 
+		/* Set the peak and nominal outputs */
+		elevatorL.configNominalOutputForward(0, 30);
+		elevatorL.configNominalOutputReverse(0, 30);
+		elevatorL.configPeakOutputForward(0.5, 30);
+		elevatorL.configPeakOutputReverse(-0.5, 30);
+
+		/* Set Motion Magic gains in slot0 - see documentation */
+		elevatorL.selectProfileSlot(0, 0);
+		elevatorL.config_kF(0, elevatorLkFF, 30);
+		elevatorL.config_kP(0, elevatorLkP, 30);
+		elevatorL.config_kI(0, elevatorLkI, 30);
+		elevatorL.config_kD(0, elevatorLkD, 30);
+
+		/* Set acceleration and vcruise velocity - see documentation */
+		elevatorL.configMotionCruiseVelocity(15000, 30);
+		elevatorL.configMotionAcceleration(6000, 30);
+
+		/* Zero the sensor once on robot boot up */
+		elevatorL.setSelectedSensorPosition(0, 0, 30);
+
 
 		/* Factory default hardware to prevent unexpected behavior */
 		claw.configFactoryDefault();
@@ -147,14 +167,17 @@ public void initElevator(){
 
 	
 	public void setArmPosition(double latSetPos) {
-		double wheelDim = 3.013;
+		//double wheelDim = 3.013;
 		//Conversion for lateral Set Position to added rotations needed to achieve correct position
 		//double rotations = (latSetPos / Math.PI) / (12 * Math.cos(Math.toRadians(18.9)) * wheelDim);
-		double rotations = (latSetPos / Math.cos(Math.toRadians(18.9))) / 12 * (wheelDim * Math.PI);
+		//double rotations = (latSetPos / Math.cos(Math.toRadians(18.9))) / 12 * (wheelDim * Math.PI);
 		
-		double rawPos = (rotations * kUnitsPerRevolution);
+		//double rawPos = (rotations * kUnitsPerRevolution);
+		double rawPos = latSetPos;
         elevatorL.set(ControlMode.MotionMagic, rawPos);
-		elevatorR.set(ControlMode.MotionMagic, elevatorL.getSelectedSensorPosition());
+		//elevatorR.set(ControlMode.Follower, elevatorL);
+
+		elevatorR.follow(elevatorL);
         SmartDashboard.putNumber("armSetpoint (rotations)", latSetPos);
         SmartDashboard.putNumber("armSetpoint (encoder ticks)", (latSetPos * kUnitsPerRevolution));
         SmartDashboard.putNumber("armPosition", elevatorL.getSelectedSensorPosition());
@@ -165,8 +188,13 @@ public void initElevator(){
 	elevatorR.set(ControlMode.PercentOutput, output);
 }
 
-  public void clawOpen() {
-	claw.set(ControlMode.MotionMagic, 10);
+  public void clawOpen(boolean activate) {
+	//int add = 200;
+	//if (activate){
+	//	add += 100;
+	//}
+	
+	claw.set(ControlMode.PercentOutput, 0.1);
 	}
 
   public void clawClose() {
