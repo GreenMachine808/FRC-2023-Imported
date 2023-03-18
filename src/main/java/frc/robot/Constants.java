@@ -89,10 +89,26 @@ public final class Constants {
     public static final double visionLowerPosition = 0.2;
   }
 
+  public static final class ArmConstants {
+    //Claw PID coefficients, for changing if need be
+  public static final double clawkP = 0.2;
+  public static final double clawkI = 0.0;
+  public static final double clawkD = 0.0;
+  public static final double clawIz = 0;
+  public static final double clawkFF = 0.2;
+  public static final double clawkMaxOutput = 1;
+  public static final double clawkMinOutput = -1;
+
+  //Arm TalonFX Constants
+  public static final int kUnitsPerRevolution = 2048; /* this is constant for Talon FX */
 
   public static final int elevator1 = 6;
   public static final int elevator2 = 5;
   public static final int clawMotor = 4;
+
+  }
+  
+ 
 
 
   // THIS IS PROBABLY WRONG
@@ -124,7 +140,6 @@ public final class Constants {
   public static final double normalTurn = 0.4;
 
 
-//Arm TalonFX Constants
-  public static final int kUnitsPerRevolution = 2048; /* this is constant for Talon FX */
+
 
 }

@@ -4,11 +4,7 @@
 
 package frc.robot.subsystems;
 
-import static frc.robot.Constants.clawMotor;
-import static frc.robot.Constants.elevator1;
-import static frc.robot.Constants.elevator2;
-
-import static frc.robot.Constants.kUnitsPerRevolution;
+import static frc.robot.Constants.ArmConstants.*;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -20,6 +16,8 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.fasterxml.jackson.databind.AnnotationIntrospector.ReferenceProperty.Type;
 import com.revrobotics.CANSparkMax;
+
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -92,7 +90,57 @@ public void initElevator(){
 		elevatorL.setNeutralMode(kBrakeDurNeutral);
 		elevatorR.setNeutralMode(kBrakeDurNeutral);
 
-		claw.setNeutralMode(kBrakeDurNeutral);
+
+		/* Factory default hardware to prevent unexpected behavior */
+		claw.configFactoryDefault();
+
+		/* Configure Sensor Source for Pirmary PID */
+		claw.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 30);
+
+		/* set deadband to super small 0.001 (0.1 %).
+			The default deadband is 0.04 (4 %) */
+		claw.configNeutralDeadband(0.001, 30);
+
+		/*
+		 * Choose which direction motor should spin during positive
+		 * motor-output/sensor-velocity. Note setInverted also takes classic true/false
+		 * as an input.
+		 */
+        claw.setInverted(TalonFXInvertType.CounterClockwise);
+		/*
+		 * Talon FX does not need sensor phase set for its integrated sensor
+		 * This is because it will always be correct if the selected feedback device is integrated sensor (default value)
+		 * and the user calls getSelectedSensor* to get the sensor's position/velocity.
+		 * 
+		 * https://phoenix-documentation.readthedocs.io/en/latest/ch14_MCSensor.html#sensor-phase
+		 */
+
+		/* Brake or coast during neutral */
+        claw.setNeutralMode(NeutralMode.Brake);
+        
+        /* Set relevant frame periods to be at least as fast as periodic rate */
+		claw.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 30);
+		claw.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, 30);
+
+		/* Set the peak and nominal outputs */
+		claw.configNominalOutputForward(0, 30);
+		claw.configNominalOutputReverse(0, 30);
+		claw.configPeakOutputForward(0.5, 30);
+		claw.configPeakOutputReverse(-0.5, 30);
+
+		/* Set Motion Magic gains in slot0 - see documentation */
+		claw.selectProfileSlot(0, 0);
+		claw.config_kF(0, clawkFF, 30);
+		claw.config_kP(0, clawkP, 30);
+		claw.config_kI(0, clawkI, 30);
+		claw.config_kD(0, clawkD, 30);
+
+		/* Set acceleration and vcruise velocity - see documentation */
+		claw.configMotionCruiseVelocity(15000, 30);
+		claw.configMotionAcceleration(6000, 30);
+
+		/* Zero the sensor once on robot boot up */
+		claw.setSelectedSensorPosition(0, 0, 30);
 	}
 
     //weightdropper = new Servo(WEIGHT_DROPPER_CHANNEL);
@@ -118,14 +166,14 @@ public void initElevator(){
 }
 
   public void clawOpen() {
-	claw.set(ControlMode.PercentOutput, 0.25);
+	claw.set(ControlMode.MotionMagic, 1000);
 	}
 
   public void clawClose() {
-	claw.set(ControlMode.PercentOutput, -0.25);
+	claw.set(ControlMode.MotionMagic, 0);
 	}
 	public void clawStop() {
-	claw.set(ControlMode.PercentOutput, 0);
+	claw.set(ControlMode.MotionMagic, claw.getSelectedSensorPosition());
 	}
   
   
