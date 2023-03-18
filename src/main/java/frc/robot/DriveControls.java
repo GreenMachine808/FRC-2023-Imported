@@ -38,8 +38,8 @@ public class DriveControls {
 
   public final JoystickButton elevatorManualToggle = new JoystickButton(joystick2, 1);
 
-  public final JoystickButton clawOpen = new JoystickButton(joystick2, 7);
-  public final JoystickButton clawClose = new JoystickButton(joystick2, 6);
+  public final JoystickButton clawOpen = new JoystickButton(joystick2, 6);
+  public final JoystickButton clawClose = new JoystickButton(joystick2, 7);
   public final JoystickButton clawStop = new JoystickButton(joystick2, 8);
  
   public final JoystickButton resetDrive = new JoystickButton(joystick2, 11);
