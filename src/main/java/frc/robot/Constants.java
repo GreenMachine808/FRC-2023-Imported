@@ -48,7 +48,7 @@ public final class Constants {
     // Back Right
     public static final int BACK_RIGHT_ANGLE_MOTOR = 22;
     public static final int BACK_RIGHT_DRIVE_MOTOR = 12;
-    public static final double BACK_RIGHT_OFFSET = -90;
+    public static final double BACK_RIGHT_OFFSET = 0;
     public static final int BACK_RIGHT_ENCODER = 1;
 
     // Back Left
