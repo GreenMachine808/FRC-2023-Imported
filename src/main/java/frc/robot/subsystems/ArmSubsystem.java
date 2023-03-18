@@ -166,7 +166,7 @@ public void initElevator(){
 }
 
   public void clawOpen() {
-	claw.set(ControlMode.MotionMagic, 1000);
+	claw.set(ControlMode.MotionMagic, 10);
 	}
 
   public void clawClose() {
