@@ -12,11 +12,6 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.runDrive;
 import frc.robot.commands.runBalance;
-import frc.robot.commands.runIntake;
-import frc.robot.commands.runIntakeReverse;
-import frc.robot.commands.runIntakeTwo;
-import frc.robot.commands.runShooter;
-import frc.robot.commands.runShooterHigh;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -66,7 +61,7 @@ public class RobotContainer {
           modifyTurnInput(controls.getYaw() * 0.7)), robotDrive ));
 
     arm.setDefaultCommand(
-      new RunCommand(() -> arm.setElevatorOutput(controls.getElevatorAxis() * 0.25), arm)
+      new RunCommand(() -> arm.setElevatorOutput(controls.getElevatorAxis() * -0.25), arm)
     );
     
   }
@@ -85,10 +80,10 @@ public class RobotContainer {
     // 2. SmartDashboard data so that sprinting displayes as toggled
 
     //Make this a .whenHeld? Want to make this consistant?
-    controls.fastDriveMode.toggleOnTrue(new StartEndCommand(
+    controls.fastDriveMode.whileTrue(new StartEndCommand(
       () -> robotDrive.runSprint = true,
       () -> robotDrive.runSprint = false ));
-    controls.slowDriveMode.toggleOnTrue(new StartEndCommand(
+    controls.slowDriveMode.whileTrue(new StartEndCommand(
       () -> robotDrive.runSlow = true, 
       () -> robotDrive.runSlow = false ));
     /* controls.fullDriveMode.toggleWhenPressed(new StartEndCommand(
@@ -120,10 +115,11 @@ public class RobotContainer {
     controls.clawClose.toggleOnTrue(new StartEndCommand(
       () -> arm.clawClose(),
       () -> arm.clawStop()));
-      controls.clawOpen.toggleOnTrue(new StartEndCommand(
+      
+       controls.clawOpen.toggleOnTrue(new StartEndCommand(
         () -> arm.clawOpen(),
         () -> arm.clawStop()));
-
+    
     
 
     /* controls.dropElevator0_0.whileHeld(new RunCommand(
@@ -243,10 +239,6 @@ public class RobotContainer {
 
   public double getTurnMod(){
     return turnMod;
-  }
-
-  public double getClawSpeed() {
-    return arm.claw.get();
   }
 
    

@@ -16,40 +16,41 @@ import static frc.robot.Constants.*;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.commands.runIntake;
-import frc.robot.commands.runShooter;
+//import frc.robot.commands.runIntake;
+//import frc.robot.commands.runShooter;
 
 public class ShooterSubsystem extends SubsystemBase {
   
   // Create variables specific to the subsystem, as well as the devices (new Motor m_motor)
-  private final CANSparkMax conveyor_m, shooter1_m, shooter2_m;
-  private final RelativeEncoder shooter_e;
+  //private final CANSparkMax conveyor_m, shooter1_m, shooter2_m;
+  //private final RelativeEncoder shooter_e;
   //private final SparkMaxPIDController shooter_mc, conveyor_mc;
-  private final TalonSRX intake_m;
-  private final DoubleSolenoid intake_p;
-  private final Command runShooterCo = new runShooter(this);
-  private final Command runIntakeCo = new runIntake(this);
+  //private final TalonSRX intake_m;
+  //private final DoubleSolenoid intake_p;
+  //private final Command runShooterCo = new runShooter(this);
+  //private final Command runIntakeCo = new runIntake(this);
   
   /** Creates a new ExampleSubsystem. */
   public ShooterSubsystem() {
 
     // Set value to variables and other initialization here
-    conveyor_m = new CANSparkMax(CONVEYOR_MOTOR, MotorType.kBrushed);
+    //conveyor_m = new CANSparkMax(CONVEYOR_MOTOR, MotorType.kBrushed);
     //conveyor_mc = conveyor_m.getPIDController();
-    conveyor_m.restoreFactoryDefaults();
+    //conveyor_m.restoreFactoryDefaults();
 
-    shooter1_m = new CANSparkMax(SHOOTER_1_MOTOR, MotorType.kBrushless);
-    shooter2_m = new CANSparkMax(SHOOTER_2_MOTOR, MotorType.kBrushless);
+    //shooter1_m = new CANSparkMax(SHOOTER_1_MOTOR, MotorType.kBrushless);
+    //shooter2_m = new CANSparkMax(SHOOTER_2_MOTOR, MotorType.kBrushless);
     //shooter_mc = shooter1_m.getPIDController();
-    shooter1_m.restoreFactoryDefaults();
-    shooter2_m.restoreFactoryDefaults();
-    shooter1_m.setInverted(true);
+    //shooter1_m.restoreFactoryDefaults();
+    //shooter2_m.restoreFactoryDefaults();
+    //shooter1_m.setInverted(true);
 
-    shooter_e = shooter1_m.getEncoder(); // To display values (?)
+    //shooter_e = shooter1_m.getEncoder(); // To display values (?)
 
-    intake_m = new TalonSRX(INTAKE_MOTOR);
-    intake_p = new DoubleSolenoid(PNEUMATICSTYPE, INTAKEFORWARDCHANNEL,
+    //intake_m = new TalonSRX(INTAKE_MOTOR);
+    /* intake_p = new DoubleSolenoid(PNEUMATICSTYPE, INTAKEFORWARDCHANNEL,
       INTAKEREVERSECHANNEL);
+      */
 
 
     
@@ -60,7 +61,7 @@ public class ShooterSubsystem extends SubsystemBase {
     shooter_mc.setIZone(shooterkIz);
     shooter_mc.setFF(shooterkFF);
     shooter_mc.setOutputRange(shooterkMinOutput, shooterkMaxOutput);*/
-    shooter2_m.follow(shooter1_m, true);
+    //shooter2_m.follow(shooter1_m, true);
 
     /*conveyor_mc.setP(ballStoragekP);
     conveyor_mc.setI(ballStoragekI);
@@ -69,9 +70,9 @@ public class ShooterSubsystem extends SubsystemBase {
     conveyor_mc.setFF(ballStoragekFF);
     conveyor_mc.setOutputRange(ballStoragekMinOutput, ballStoragekMaxOutput);*/
 
-    intake_p.set(DoubleSolenoid.Value.kReverse);
+    //intake_p.set(DoubleSolenoid.Value.kReverse);
   }
-
+  /*
   // method for pneumatics activation
   public void setIntakeArm(DoubleSolenoid.Value value) { intake_p.set(value); }
   
@@ -109,5 +110,5 @@ public class ShooterSubsystem extends SubsystemBase {
     conveyor_m.set(0);
     intake_m.set(ControlMode.PercentOutput, 0);
   }
-
+ */
 }

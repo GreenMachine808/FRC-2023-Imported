@@ -36,25 +36,25 @@ public final class Constants {
     // Front Left
     public static final int FRONT_LEFT_ANGLE_MOTOR = 24;
     public static final int FRONT_LEFT_DRIVE_MOTOR = 14;
-    public static final double FRONT_LEFT_OFFSET = 245;
+    public static final double FRONT_LEFT_OFFSET = 0;
     public static final int FRONT_LEFT_ENCODER = 3;
 
     // Front Right
     public static final int FRONT_RIGHT_ANGLE_MOTOR = 23;
     public static final int FRONT_RIGHT_DRIVE_MOTOR = 13;
-    public static final double FRONT_RIGHT_OFFSET = 303;
+    public static final double FRONT_RIGHT_OFFSET = -50;
     public static final int FRONT_RIGHT_ENCODER = 2;
 
     // Back Right
     public static final int BACK_RIGHT_ANGLE_MOTOR = 22;
     public static final int BACK_RIGHT_DRIVE_MOTOR = 12;
-    public static final double BACK_RIGHT_OFFSET = 152;
+    public static final double BACK_RIGHT_OFFSET = -90;
     public static final int BACK_RIGHT_ENCODER = 1;
 
     // Back Left
     public static final int BACK_LEFT_ANGLE_MOTOR = 21;
     public static final int BACK_LEFT_DRIVE_MOTOR = 11;
-    public static final double BACK_LEFT_OFFSET = 11;
+    public static final double BACK_LEFT_OFFSET = -33;
     public static final int BACK_LEFT_ENCODER = 0;
 
     // Azimuth PID coefficients
@@ -92,15 +92,10 @@ public final class Constants {
 
   public static final int elevator1 = 6;
   public static final int elevator2 = 5;
-  public static final int clawMotor = 5;
-  
-  public static final int SHOOTER_1_MOTOR = 6;
-  public static final int SHOOTER_2_MOTOR = 7;
-  public static final int CONVEYOR_MOTOR = 9;
-  public static final int INTAKE_MOTOR = 8;
+  public static final int clawMotor = 4;
+
 
   // THIS IS PROBABLY WRONG
-  public static final int WEIGHT_DROPPER_CHANNEL = 0;
 
   // PID Constants for intake and shooter
   public static final double shooterkP = 3.0e-4;

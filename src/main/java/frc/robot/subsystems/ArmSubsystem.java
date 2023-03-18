@@ -17,7 +17,7 @@ import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.fasterxml.jackson.databind.AnnotationIntrospector.ReferenceProperty.Type;
 import com.revrobotics.CANSparkMax;
 
@@ -34,7 +34,7 @@ public class ArmSubsystem extends SubsystemBase {
   public final TalonSRX elevatorL;
   public final TalonSRX elevatorR;
 
-  public final CANSparkMax claw;
+  public final TalonFX claw;
   //public final Servo weightdropper;
   //public final Compressor phCompressor = new Compressor(PNEUMATICSTYPE);
 
@@ -45,7 +45,7 @@ public class ArmSubsystem extends SubsystemBase {
     elevatorL = new TalonSRX(elevator1);
 	elevatorR = new TalonSRX(elevator2);
 
-	claw = new CANSparkMax(clawMotor, MotorType.kBrushless);
+	claw = new TalonFX(clawMotor);
 	initElevator();
 		
 }
@@ -53,7 +53,6 @@ public void initElevator(){
 	final TalonFXInvertType Counter = TalonFXInvertType.CounterClockwise;
 	final TalonFXInvertType Clock = TalonFXInvertType.Clockwise;
 
-	claw.restoreFactoryDefaults();
 
 
 	/** electic brake during neutral */
@@ -86,12 +85,14 @@ public void initElevator(){
 		 * motor-output/sensor-velocity. Note setInverted also takes classic true/false
 		 * as an input.
 		 */
-		elevatorL.setInverted(true);
+		//elevatorL.setInverted(true);
 		//elevatorR.setInverted(invert: true);
 
 		/* brake or coast during neutral */
 		elevatorL.setNeutralMode(kBrakeDurNeutral);
 		elevatorR.setNeutralMode(kBrakeDurNeutral);
+
+		claw.setNeutralMode(kBrakeDurNeutral);
 	}
 
     //weightdropper = new Servo(WEIGHT_DROPPER_CHANNEL);
@@ -117,14 +118,14 @@ public void initElevator(){
 }
 
   public void clawOpen() {
-	claw.set(0.1);
+	claw.set(ControlMode.PercentOutput, 0.25);
 	}
 
   public void clawClose() {
-	claw.set(-0.1);
+	claw.set(ControlMode.PercentOutput, -0.25);
 	}
 	public void clawStop() {
-	claw.set(0);
+	claw.set(ControlMode.PercentOutput, 0);
 	}
   
   
