@@ -16,6 +16,7 @@ import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RepeatCommand;
@@ -63,8 +64,10 @@ public class RobotContainer {
 
     arm.setDefaultCommand(
       new RunCommand(() -> arm.setElevatorOutput(controls.getElevatorAxis() * -0.25), arm)
+
+      //new RunCommand(() -> arm.clawStop(), arm)
     );
-    
+     
   }
 
 
@@ -121,11 +124,14 @@ public class RobotContainer {
       */
     controls.clawClose.onTrue(new InstantCommand(() -> arm.clawClose()));
       
-       //controls.clawOpen.onTrue(new RepeatCommand(new InstantCommand(
-        //() -> arm.clawOpen(true))));
+       controls.clawStop.onTrue(new InstantCommand(
+        () -> arm.initElevator()));
 
-      controls.clawOpen.whileTrue(new StartEndCommand(() -> arm.clawOpen(true), () -> arm.clawStop()));
-    
+      //controls.clawOpen.onTrue(new StartEndCommand(
+        //() -> arm.clawOpen() , () -> arm.clawStop()));
+
+      controls.clawOpen.onTrue(new InstantCommand(() -> arm.clawOpen()));
+
     
 
     /* controls.dropElevator0_0.whileHeld(new RunCommand(

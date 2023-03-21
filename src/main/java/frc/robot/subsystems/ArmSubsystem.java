@@ -13,6 +13,7 @@ import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.fasterxml.jackson.databind.AnnotationIntrospector.ReferenceProperty.Type;
 import com.revrobotics.CANSparkMax;
@@ -59,9 +60,11 @@ public void initElevator(){
 
 	/* newer config API */
   TalonFXConfiguration configs = new TalonFXConfiguration();
+
+  //TalonSRXConfiguration cofigs2ElectricBoogalo = new TalonSRXConfiguration();
   /* select integ-sensor for PID0 (it doesn't matter if PID is actually used) */
   configs.primaryPID.selectedFeedbackSensor = FeedbackDevice.IntegratedSensor;
-  
+
 	/*
 		 * status frame rate - user can speed up the position/velocity reporting if need
 		 * be.
@@ -72,10 +75,10 @@ public void initElevator(){
 		 * can-bus-utilization-error-metrics
 		 */
 		elevatorL.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
-		elevatorR.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
+		//elevatorR.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
 
 		elevatorL.configNeutralDeadband(0.001, 30);
-		elevatorR.configNeutralDeadband(0.001, 30);
+		//elevatorR.configNeutralDeadband(0.001, 30);
 
 
 		/*
@@ -145,8 +148,8 @@ public void initElevator(){
 		/* Set the peak and nominal outputs */
 		claw.configNominalOutputForward(0, 30);
 		claw.configNominalOutputReverse(0, 30);
-		claw.configPeakOutputForward(0.5, 30);
-		claw.configPeakOutputReverse(-0.5, 30);
+		claw.configPeakOutputForward(1, 30);
+		claw.configPeakOutputReverse(-1, 30);
 
 		/* Set Motion Magic gains in slot0 - see documentation */
 		claw.selectProfileSlot(0, 0);
@@ -161,6 +164,12 @@ public void initElevator(){
 
 		/* Zero the sensor once on robot boot up */
 		claw.setSelectedSensorPosition(0, 0, 30);
+
+		SmartDashboard.putNumber("claw set point", claw.getSelectedSensorPosition());
+
+		claw.set(ControlMode.MotionMagic, 0);
+
+
 	}
 
     //weightdropper = new Servo(WEIGHT_DROPPER_CHANNEL);
@@ -179,29 +188,32 @@ public void initElevator(){
 
 		elevatorR.follow(elevatorL);
         SmartDashboard.putNumber("armSetpoint (rotations)", latSetPos);
-        SmartDashboard.putNumber("armSetpoint (encoder ticks)", (latSetPos * kUnitsPerRevolution));
+        SmartDashboard.putNumber("armSetpoint (encoder ticks)", (latSetPos * FXUnitsPerRevolution));
         SmartDashboard.putNumber("armPosition", elevatorL.getSelectedSensorPosition());
   }
 
   public void setElevatorOutput(double output) {
 	elevatorL.set(ControlMode.PercentOutput, output);
-	elevatorR.set(ControlMode.PercentOutput, output);
+	elevatorR.follow(elevatorL);
 }
 
-  public void clawOpen(boolean activate) {
+  public void clawOpen() {
 	//int add = 200;
 	//if (activate){
 	//	add += 100;
 	//}
 	
-	claw.set(ControlMode.PercentOutput, 0.1);
+	claw.set(ControlMode.MotionMagic, 200);
+
 	}
 
   public void clawClose() {
 	claw.set(ControlMode.MotionMagic, 0);
+
+
 	}
 	public void clawStop() {
-	claw.set(ControlMode.MotionMagic, claw.getSelectedSensorPosition());
+	claw.set(ControlMode.MotionMagic, claw.getSelectedSensorPosition());//claw.getSelectedSensorPosition());
 	}
   
   

@@ -91,16 +91,16 @@ public final class Constants {
 
   public static final class ArmConstants {
     //Claw PID coefficients, for changing if need be
-  public static final double clawkP = 0.2;
-  public static final double clawkI = 0.0;
-  public static final double clawkD = 0.0;
+  public static final double clawkP = 0.5;
+  public static final double clawkI = 0.00;
+  public static final double clawkD = 50;
   public static final double clawIz = 0;
   public static final double clawkFF = 0.2;
   public static final double clawkMaxOutput = 1;
   public static final double clawkMinOutput = -1;
 
   //Arm TalonFX Constants
-  public static final int kUnitsPerRevolution = 2048; /* this is constant for Talon FX */
+  public static final int FXUnitsPerRevolution = 2048; /* this is constant for Talon FX */
 
   public static final double elevatorLkP = 0.2;
   public static final double elevatorLkI = 0.0;

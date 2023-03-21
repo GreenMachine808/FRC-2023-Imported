@@ -31,6 +31,9 @@ import org.opencv.imgproc.Imgproc;
 import edu.wpi.first.apriltag.AprilTagDetection;
 import edu.wpi.first.apriltag.AprilTagDetector;
 
+
+
+import frc.robot.subsystems.ArmSubsystem;
 import java.util.ArrayList;
 
 
@@ -46,6 +49,8 @@ public class Robot extends TimedRobot {
   private Command autonomousCommand;
   private RobotContainer robotContainer;
   private SendableChooser<Command> auto;
+  private final ArmSubsystem arm = new ArmSubsystem();
+
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -94,6 +99,9 @@ public class Robot extends TimedRobot {
     
     SmartDashboard.putNumber("Speed modifier: ", robotContainer.getSpeedMod());
     SmartDashboard.putNumber("Turn modifier: ", robotContainer.getTurnMod());
+
+    SmartDashboard.putNumber("claw set point", arm.claw.getSelectedSensorPosition());
+
 
     
 
