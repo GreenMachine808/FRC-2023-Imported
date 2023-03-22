@@ -114,7 +114,7 @@ public class RobotContainer {
     //controls.elevatorMid.onTrue(new InstantCommand(() -> arm.setArmPosition(2))); //.andThen(new InstantCommand(() -> arm.clawOpen())) );
     //controls.elevatorHigh.onTrue(new InstantCommand(() -> arm.setArmPosition(4))); //.andThen(new InstantCommand(() -> arm.clawOpen())) );
 
-    controls.elevatorManualToggle.onTrue(new InstantCommand(() -> arm.setArmPosition(1000)));
+    controls.elevatorManualToggle.onTrue(new InstantCommand(() -> arm.setArmPosition(100)));
     
     controls.elevatorRetract.onTrue(new InstantCommand(() -> arm.setArmPosition(0)));
 
