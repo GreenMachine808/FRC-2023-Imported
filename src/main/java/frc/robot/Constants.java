@@ -95,7 +95,7 @@ public final class Constants {
   public static final double clawkI = 0.005;
   public static final double clawkD = 50;
   public static final double clawIz = 0;
-  public static final double clawkFF = 0.2;
+  public static final double clawkFF = 0;
   public static final double clawkMaxOutput = 1;
   public static final double clawkMinOutput = -1;
 
