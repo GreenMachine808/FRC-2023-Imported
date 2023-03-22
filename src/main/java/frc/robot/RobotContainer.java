@@ -90,10 +90,10 @@ public class RobotContainer {
     controls.slowDriveMode.whileTrue(new StartEndCommand(
       () -> robotDrive.runSlow = true, 
       () -> robotDrive.runSlow = false ));
-    /* controls.fullDriveMode.toggleWhenPressed(new StartEndCommand(
-      () -> robotDrive.runFull = true, 
-      () -> robotDrive.runFull = false ));
-    */
+    //controls.fullDriveMode.whileTrue(new StartEndCommand(
+      //() -> robotDrive.runFull = true, 
+      //() -> robotDrive.runFull = false ));
+    
 
     /* controls.fastTurnMode.toggleWhenPressed(new StartEndCommand(
       () -> robotDrive.turnSprint = true, 
@@ -109,12 +109,13 @@ public class RobotContainer {
     
 
     controls.resetDrive.onTrue(new InstantCommand(() -> robotDrive.initDrive()) );
+    controls.resetElevator.onTrue(new InstantCommand(() -> arm.initElevator()));
 
-    //controls.elevatorLow.onTrue(new InstantCommand(() -> arm.setArmPosition(0))); //.andThen(new InstantCommand(() -> arm.clawOpen())) );
-    //controls.elevatorMid.onTrue(new InstantCommand(() -> arm.setArmPosition(2))); //.andThen(new InstantCommand(() -> arm.clawOpen())) );
-    //controls.elevatorHigh.onTrue(new InstantCommand(() -> arm.setArmPosition(4))); //.andThen(new InstantCommand(() -> arm.clawOpen())) );
+    controls.elevatorLow.onTrue(new InstantCommand(() -> arm.setArmPosition(10))); //.andThen(new InstantCommand(() -> arm.clawOpen())) );
+    controls.elevatorMid.onTrue(new InstantCommand(() -> arm.setArmPosition(50))); //.andThen(new InstantCommand(() -> arm.clawOpen())) );
+    controls.elevatorHigh.onTrue(new InstantCommand(() -> arm.setArmPosition(300))); //.andThen(new InstantCommand(() -> arm.clawOpen())) );
 
-    controls.elevatorManualToggle.onTrue(new InstantCommand(() -> arm.setArmPosition(100)));
+    //controls.elevatorManualToggle.onTrue(new InstantCommand(() -> arm.setArmPosition(100)));
     
     controls.elevatorRetract.onTrue(new InstantCommand(() -> arm.setArmPosition(0)));
 
@@ -124,13 +125,9 @@ public class RobotContainer {
       */
     controls.clawClose.onTrue(new InstantCommand(() -> arm.clawClose()));
       
-       controls.clawStop.onTrue(new InstantCommand(
-        () -> arm.initElevator()));//.andThen(() -> arm.clawStop()));
+    controls.clawStop.onTrue(new InstantCommand(() -> arm.clawStop()));//.andThen(() -> arm.clawStop()));
 
-      //controls.clawOpen.onTrue(new StartEndCommand(
-        //() -> arm.clawOpen() , () -> arm.clawStop()));
-
-      controls.clawOpen.onTrue(new InstantCommand(() -> arm.clawOpen()));
+    controls.clawOpen.onTrue(new InstantCommand(() -> arm.clawOpen()));
 
     
 

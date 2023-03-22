@@ -104,7 +104,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Elevator set point", arm.elevatorL.getSelectedSensorPosition());
 
 
-
     
 
     //robotContainer.getPSI();

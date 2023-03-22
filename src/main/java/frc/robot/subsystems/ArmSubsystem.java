@@ -33,7 +33,7 @@ public class ArmSubsystem extends SubsystemBase {
   public final TalonSRX elevatorL;
   public final TalonSRX elevatorR;
 
-  public final TalonFX claw;
+  public final TalonSRX claw;
   //public final Servo weightdropper;
   //public final Compressor phCompressor = new Compressor(PNEUMATICSTYPE);
 
@@ -44,7 +44,7 @@ public class ArmSubsystem extends SubsystemBase {
     elevatorL = new TalonSRX(elevator1);
 	elevatorR = new TalonSRX(elevator2);
 
-	claw = new TalonFX(clawMotor);
+	claw = new TalonSRX(clawMotor);
 	initElevator();
 		
 }
@@ -59,13 +59,13 @@ public void initElevator(){
 	  final NeutralMode kCoastDurNeutral = NeutralMode.Coast;
 
 	/* newer config API */
-  TalonFXConfiguration configs = new TalonFXConfiguration();
+  TalonSRXConfiguration clawConfigs = new TalonSRXConfiguration();
 
-  TalonSRXConfiguration conf2 = new TalonSRXConfiguration();
+  TalonSRXConfiguration elevatorConfigs = new TalonSRXConfiguration();
   /* select integ-sensor for PID0 (it doesn't matter if PID is actually used) */
-  configs.primaryPID.selectedFeedbackSensor = FeedbackDevice.IntegratedSensor;
+  	clawConfigs.primaryPID.selectedFeedbackSensor = FeedbackDevice.QuadEncoder;
 
-conf2.primaryPID.selectedFeedbackSensor = FeedbackDevice.CTRE_MagEncoder_Absolute;
+	elevatorConfigs.primaryPID.selectedFeedbackSensor = FeedbackDevice.QuadEncoder;
 	/*
 		 * status frame rate - user can speed up the position/velocity reporting if need
 		 * be.
@@ -80,10 +80,10 @@ conf2.primaryPID.selectedFeedbackSensor = FeedbackDevice.CTRE_MagEncoder_Absolut
 
 
 
-		elevatorL.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
-		//elevatorR.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
+		elevatorL.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 30);
+		elevatorL.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, 30);
 
-		elevatorL.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 30);
+		elevatorL.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
 
 
 		elevatorL.configNeutralDeadband(0.001, 30);
@@ -127,7 +127,7 @@ conf2.primaryPID.selectedFeedbackSensor = FeedbackDevice.CTRE_MagEncoder_Absolut
 		claw.configFactoryDefault();
 
 		/* Configure Sensor Source for Pirmary PID */
-		claw.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 30);
+		claw.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
 
 		/* set deadband to super small 0.001 (0.1 %).
 			The default deadband is 0.04 (4 %) */
@@ -138,7 +138,7 @@ conf2.primaryPID.selectedFeedbackSensor = FeedbackDevice.CTRE_MagEncoder_Absolut
 		 * motor-output/sensor-velocity. Note setInverted also takes classic true/false
 		 * as an input.
 		 */
-        claw.setInverted(TalonFXInvertType.CounterClockwise);
+        claw.setInverted(true);
 		/*
 		 * Talon FX does not need sensor phase set for its integrated sensor
 		 * This is because it will always be correct if the selected feedback device is integrated sensor (default value)
@@ -206,7 +206,7 @@ conf2.primaryPID.selectedFeedbackSensor = FeedbackDevice.CTRE_MagEncoder_Absolut
 	elevatorR.follow(elevatorL);
 }
 
-  public void clawOpen() {
+  public void clawClose() {
 	//int add = 200;
 	//if (activate){
 	//	add += 100;
@@ -216,8 +216,8 @@ conf2.primaryPID.selectedFeedbackSensor = FeedbackDevice.CTRE_MagEncoder_Absolut
 
 	}
 
-  public void clawClose() {
-	claw.set(ControlMode.MotionMagic, 50);
+  public void clawOpen() {
+	claw.set(ControlMode.MotionMagic, 10);
 
 
 	}

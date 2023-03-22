@@ -22,8 +22,7 @@ public class DriveControls {
   public final JoystickButton fastDriveMode = new JoystickButton(joystick0, 2);
   public final JoystickButton fullDriveMode = new JoystickButton(joystick0, 4);
 
-  public final JoystickButton slowTurnMode = new JoystickButton(joystick1, 1);
-  public final JoystickButton fastTurnMode = new JoystickButton(joystick1, 10);
+  public final JoystickButton slowTurnMode = new JoystickButton(joystick1, 2);
   
   
   public double getForward() { return -joystick0.getRawAxis(1); }
@@ -38,14 +37,17 @@ public class DriveControls {
 
   public final JoystickButton elevatorManualToggle = new JoystickButton(joystick2, 1);
 
-  public final JoystickButton clawOpen = new JoystickButton(joystick2, 6);
-  public final JoystickButton clawClose = new JoystickButton(joystick2, 7);
+
+  public final JoystickButton clawClose = new JoystickButton(joystick2, 6);
+  public final JoystickButton clawOpen = new JoystickButton(joystick2, 7);
   public final JoystickButton clawStop = new JoystickButton(joystick2, 8);
  
-  public final JoystickButton resetDrive = new JoystickButton(joystick2, 11);
+  public final JoystickButton resetDrive = new JoystickButton(joystick0, 8);
+  public final JoystickButton resetElevator = new JoystickButton(joystick0, 9);
 
-  public final JoystickButton makeWheelsSideways = new JoystickButton(joystick0, 7);
-  public final JoystickButton balanceRobotForward = new JoystickButton(joystick0, 11);
-  public final JoystickButton balanceRobotBackward = new JoystickButton(joystick0, 10);
+
+  public final JoystickButton makeWheelsSideways = new JoystickButton(joystick1, 7);
+  public final JoystickButton balanceRobotForward = new JoystickButton(joystick1, 11);
+  public final JoystickButton balanceRobotBackward = new JoystickButton(joystick1, 10);
   
 }
