@@ -61,10 +61,11 @@ public void initElevator(){
 	/* newer config API */
   TalonFXConfiguration configs = new TalonFXConfiguration();
 
-  //TalonSRXConfiguration cofigs2ElectricBoogalo = new TalonSRXConfiguration();
+  TalonSRXConfiguration conf2 = new TalonSRXConfiguration();
   /* select integ-sensor for PID0 (it doesn't matter if PID is actually used) */
   configs.primaryPID.selectedFeedbackSensor = FeedbackDevice.IntegratedSensor;
 
+conf2.primaryPID.selectedFeedbackSensor = FeedbackDevice.CTRE_MagEncoder_Absolute;
 	/*
 		 * status frame rate - user can speed up the position/velocity reporting if need
 		 * be.
@@ -74,8 +75,16 @@ public void initElevator(){
 		 * https://phoenix-documentation.readthedocs.io/en/latest/ch18_CommonAPI.html#
 		 * can-bus-utilization-error-metrics
 		 */
+		elevatorL.configFactoryDefault();
+		elevatorR.configFactoryDefault();
+
+
+
 		elevatorL.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
 		//elevatorR.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
+
+		elevatorL.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 30);
+
 
 		elevatorL.configNeutralDeadband(0.001, 30);
 		//elevatorR.configNeutralDeadband(0.001, 30);
@@ -159,15 +168,15 @@ public void initElevator(){
 		claw.config_kD(0, clawkD, 30);
 
 		/* Set acceleration and vcruise velocity - see documentation */
-		claw.configMotionCruiseVelocity(15000, 30);
-		claw.configMotionAcceleration(6000, 30);
+		claw.configMotionCruiseVelocity(10000, 30);
+		claw.configMotionAcceleration(10000, 30);
 
 		/* Zero the sensor once on robot boot up */
 		claw.setSelectedSensorPosition(0, 0, 30);
 
-		SmartDashboard.putNumber("claw set point", claw.getSelectedSensorPosition());
+		//SmartDashboard.putNumber("claw set point", claw.getSelectedSensorPosition());
 
-		claw.set(ControlMode.MotionMagic, 0);
+		//claw.set(ControlMode.MotionMagic, 0);
 
 
 	}
@@ -183,7 +192,7 @@ public void initElevator(){
 		
 		//double rawPos = (rotations * kUnitsPerRevolution);
 		double rawPos = latSetPos;
-        elevatorL.set(ControlMode.MotionMagic, rawPos);
+        elevatorL.set(ControlMode.MotionMagic, 50 * rawPos);
 		//elevatorR.set(ControlMode.Follower, elevatorL);
 
 		elevatorR.follow(elevatorL);
@@ -193,7 +202,7 @@ public void initElevator(){
   }
 
   public void setElevatorOutput(double output) {
-	elevatorL.set(ControlMode.PercentOutput, output);
+	elevatorL.set(ControlMode.PercentOutput, 0.5 * output);
 	elevatorR.follow(elevatorL);
 }
 
@@ -203,12 +212,12 @@ public void initElevator(){
 	//	add += 100;
 	//}
 	
-	claw.set(ControlMode.MotionMagic, 200);
+	claw.set(ControlMode.MotionMagic, 325);
 
 	}
 
   public void clawClose() {
-	claw.set(ControlMode.MotionMagic, 0);
+	claw.set(ControlMode.MotionMagic, 50);
 
 
 	}

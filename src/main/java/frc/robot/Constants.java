@@ -92,7 +92,7 @@ public final class Constants {
   public static final class ArmConstants {
     //Claw PID coefficients, for changing if need be
   public static final double clawkP = 0.5;
-  public static final double clawkI = 0.00;
+  public static final double clawkI = 0.005;
   public static final double clawkD = 50;
   public static final double clawIz = 0;
   public static final double clawkFF = 0.2;

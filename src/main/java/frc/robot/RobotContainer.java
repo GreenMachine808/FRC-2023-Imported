@@ -125,7 +125,7 @@ public class RobotContainer {
     controls.clawClose.onTrue(new InstantCommand(() -> arm.clawClose()));
       
        controls.clawStop.onTrue(new InstantCommand(
-        () -> arm.initElevator()));
+        () -> arm.initElevator()));//.andThen(() -> arm.clawStop()));
 
       //controls.clawOpen.onTrue(new StartEndCommand(
         //() -> arm.clawOpen() , () -> arm.clawStop()));
