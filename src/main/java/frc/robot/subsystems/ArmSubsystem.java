@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import static frc.robot.Constants.ArmConstants.*;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.Faults;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
@@ -34,6 +35,7 @@ public class ArmSubsystem extends SubsystemBase {
   public final TalonSRX elevatorR;
 
   public final TalonSRX claw;
+
   //public final Servo weightdropper;
   //public final Compressor phCompressor = new Compressor(PNEUMATICSTYPE);
 
@@ -45,6 +47,7 @@ public class ArmSubsystem extends SubsystemBase {
 	elevatorR = new TalonSRX(elevator2);
 
 	claw = new TalonSRX(clawMotor);
+
 	initElevator();
 		
 }
@@ -63,9 +66,9 @@ public void initElevator(){
 
   TalonSRXConfiguration elevatorConfigs = new TalonSRXConfiguration();
   /* select integ-sensor for PID0 (it doesn't matter if PID is actually used) */
-  	clawConfigs.primaryPID.selectedFeedbackSensor = FeedbackDevice.QuadEncoder;
+  	//clawConfigs.primaryPID.selectedFeedbackSensor = FeedbackDevice.CTRE_MagEncoder_Relative;
 
-	elevatorConfigs.primaryPID.selectedFeedbackSensor = FeedbackDevice.QuadEncoder;
+	//elevatorConfigs.primaryPID.selectedFeedbackSensor = FeedbackDevice.CTRE_MagEncoder_Relative;
 	/*
 		 * status frame rate - user can speed up the position/velocity reporting if need
 		 * be.
@@ -83,7 +86,7 @@ public void initElevator(){
 		elevatorL.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 30);
 		elevatorL.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, 30);
 
-		elevatorL.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
+		elevatorL.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 30);
 
 
 		elevatorL.configNeutralDeadband(0.001, 30);
@@ -98,6 +101,12 @@ public void initElevator(){
 		//elevatorL.setInverted(true);
 		//elevatorR.setInverted(invert: true);
 
+		elevatorL.setSensorPhase(true);
+
+		elevatorL.setInverted(true);
+		elevatorR.setInverted(true);
+
+
 		/* brake or coast during neutral */
 		elevatorL.setNeutralMode(kBrakeDurNeutral);
 		elevatorR.setNeutralMode(kBrakeDurNeutral);
@@ -105,8 +114,8 @@ public void initElevator(){
 		/* Set the peak and nominal outputs */
 		elevatorL.configNominalOutputForward(0, 30);
 		elevatorL.configNominalOutputReverse(0, 30);
-		elevatorL.configPeakOutputForward(0.5, 30);
-		elevatorL.configPeakOutputReverse(-0.5, 30);
+		elevatorL.configPeakOutputForward(1, 30);
+		elevatorL.configPeakOutputReverse(-1, 30);
 
 		/* Set Motion Magic gains in slot0 - see documentation */
 		elevatorL.selectProfileSlot(0, 0);
@@ -127,7 +136,7 @@ public void initElevator(){
 		claw.configFactoryDefault();
 
 		/* Configure Sensor Source for Pirmary PID */
-		claw.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
+		claw.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 30);
 
 		/* set deadband to super small 0.001 (0.1 %).
 			The default deadband is 0.04 (4 %) */
@@ -138,6 +147,8 @@ public void initElevator(){
 		 * motor-output/sensor-velocity. Note setInverted also takes classic true/false
 		 * as an input.
 		 */
+		claw.setSensorPhase(true);
+
         claw.setInverted(true);
 		/*
 		 * Talon FX does not need sensor phase set for its integrated sensor
@@ -192,18 +203,23 @@ public void initElevator(){
 		
 		//double rawPos = (rotations * kUnitsPerRevolution);
 		double rawPos = latSetPos;
-        elevatorL.set(ControlMode.MotionMagic, 50 * rawPos);
+		elevatorR.follow(elevatorL);
+        elevatorL.set(ControlMode.MotionMagic, rawPos);
 		//elevatorR.set(ControlMode.Follower, elevatorL);
 
-		elevatorR.follow(elevatorL);
-        SmartDashboard.putNumber("armSetpoint (rotations)", latSetPos);
-        SmartDashboard.putNumber("armSetpoint (encoder ticks)", (latSetPos * FXUnitsPerRevolution));
-        SmartDashboard.putNumber("armPosition", elevatorL.getSelectedSensorPosition());
+        //SmartDashboard.putNumber("armSetpoint (rotations)", latSetPos/4096);
+        //SmartDashboard.putNumber("armSetpoint (encoder ticks)", (latSetPos));
+
+
+		SmartDashboard.putNumber("Sensor Vel", elevatorL.getSelectedSensorVelocity());
+		SmartDashboard.putNumber("Output", elevatorL.getMotorOutputPercent());
+
+
   }
 
   public void setElevatorOutput(double output) {
-	elevatorL.set(ControlMode.PercentOutput, 0.5 * output);
 	elevatorR.follow(elevatorL);
+	elevatorL.set(ControlMode.PercentOutput, output);
 }
 
   public void clawClose() {
@@ -212,17 +228,24 @@ public void initElevator(){
 	//	add += 100;
 	//}
 	
-	claw.set(ControlMode.MotionMagic, 325);
+	//claw.set(ControlMode.MotionMagic, 325);
+
+	claw.set(ControlMode.PercentOutput, -0.25);
 
 	}
 
   public void clawOpen() {
-	claw.set(ControlMode.MotionMagic, 10);
+	//claw.set(ControlMode.MotionMagic, 10);
+
+	claw.set(ControlMode.PercentOutput, 0.25);
 
 
 	}
 	public void clawStop() {
-	claw.set(ControlMode.MotionMagic, claw.getSelectedSensorPosition());//claw.getSelectedSensorPosition());
+
+	//claw.set(ControlMode.MotionMagic, claw.getSelectedSensorPosition());//claw.getSelectedSensorPosition());
+
+	claw.set(ControlMode.PercentOutput, 0);
 	}
   
   

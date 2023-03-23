@@ -62,11 +62,11 @@ public class RobotContainer {
           modifyDriveInput(controls.getStrafe()),
           modifyTurnInput(controls.getYaw() * 0.7)), robotDrive ));
 
-    arm.setDefaultCommand(
-      new RunCommand(() -> arm.setElevatorOutput(controls.getElevatorAxis() * -0.25), arm)
+    //arm.setDefaultCommand(
+      //new RunCommand(() -> arm.setElevatorOutput(controls.getElevatorAxis() * 0.25), arm)
 
       //new RunCommand(() -> arm.clawStop(), arm)
-    );
+    //);
      
   }
 
@@ -104,18 +104,18 @@ public class RobotContainer {
       () -> robotDrive.turnSlow = false ));
 
 
-      //controls.elevatorManualToggle.toggleOnTrue(new RunCommand(() -> arm.setElevatorOutput(controls.getElevatorAxis() * 0.25), arm));
+      controls.elevatorManualToggle.whileTrue(new RunCommand(() -> arm.setElevatorOutput(controls.getElevatorAxis() * 0.25), arm));
 
     
 
     controls.resetDrive.onTrue(new InstantCommand(() -> robotDrive.initDrive()) );
     controls.resetElevator.onTrue(new InstantCommand(() -> arm.initElevator()));
 
-    controls.elevatorLow.onTrue(new InstantCommand(() -> arm.setArmPosition(10))); //.andThen(new InstantCommand(() -> arm.clawOpen())) );
-    controls.elevatorMid.onTrue(new InstantCommand(() -> arm.setArmPosition(50))); //.andThen(new InstantCommand(() -> arm.clawOpen())) );
-    controls.elevatorHigh.onTrue(new InstantCommand(() -> arm.setArmPosition(300))); //.andThen(new InstantCommand(() -> arm.clawOpen())) );
-
-    //controls.elevatorManualToggle.onTrue(new InstantCommand(() -> arm.setArmPosition(100)));
+    controls.elevatorLow.onTrue(new InstantCommand(() -> arm.setArmPosition(100))); //.andThen(new InstantCommand(() -> arm.clawOpen())) );
+    controls.elevatorMid.onTrue(new InstantCommand(() -> arm.setArmPosition(500))); //.andThen(new InstantCommand(() -> arm.clawOpen())) );
+    controls.elevatorHigh.onTrue(new InstantCommand(() -> arm.setArmPosition(1000))); //.andThen(new InstantCommand(() -> arm.clawOpen())) );
+    //controls.elevatorFull.onTrue(new InstantCommand(() -> arm.setArmPosition(some#)));
+    //controls.elevatorManualToggle.whileTrue(new RunCommand(() -> arm.setElevatorOutput(controls.getElevatorAxis() * 0.4)));
     
     controls.elevatorRetract.onTrue(new InstantCommand(() -> arm.setArmPosition(0)));
 

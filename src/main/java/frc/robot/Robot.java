@@ -100,8 +100,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Speed modifier: ", robotContainer.getSpeedMod());
     SmartDashboard.putNumber("Turn modifier: ", robotContainer.getTurnMod());
 
-    SmartDashboard.putNumber("claw set point", arm.claw.getSelectedSensorPosition());
-    SmartDashboard.putNumber("Elevator set point", arm.elevatorL.getSelectedSensorPosition());
+    //SmartDashboard.putNumber("claw set point", arm.claw.getSelectedSensorPosition());
+    //SmartDashboard.putNumber("Elevator set point", arm.elevatorL.getSelectedSensorPosition());
 
 
     
