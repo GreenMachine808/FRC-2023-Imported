@@ -196,7 +196,7 @@ public void initElevator(){
 
 	
 	public void setArmPosition(double latSetPos) {
-		//double wheelDim = 3.013;
+		double wheelDim = 3.013;
 		//Conversion for lateral Set Position to added rotations needed to achieve correct position
 		//double rotations = (latSetPos / Math.PI) / (12 * Math.cos(Math.toRadians(18.9)) * wheelDim);
 		//double rotations = (latSetPos / Math.cos(Math.toRadians(18.9))) / 12 * (wheelDim * Math.PI);

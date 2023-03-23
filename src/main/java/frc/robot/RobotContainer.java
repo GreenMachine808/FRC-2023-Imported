@@ -62,11 +62,10 @@ public class RobotContainer {
           modifyDriveInput(controls.getStrafe()),
           modifyTurnInput(controls.getYaw() * 0.7)), robotDrive ));
 
-    //arm.setDefaultCommand(
-      //new RunCommand(() -> arm.setElevatorOutput(controls.getElevatorAxis() * 0.25), arm)
+    arm.setDefaultCommand(
+      new RunCommand(() -> arm.setElevatorOutput(0), arm)
 
-      //new RunCommand(() -> arm.clawStop(), arm)
-    //);
+    );
      
   }
 
