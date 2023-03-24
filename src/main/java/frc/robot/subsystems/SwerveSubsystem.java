@@ -161,6 +161,7 @@ public class SwerveSubsystem extends SubsystemBase {
     for (Wheel wheel : wheels) {
       wheel.setTargetDistance(distance);
     }
+    Timer.delay(delay);
   }
 
   public void gyroBalance(boolean isBackwards) {
