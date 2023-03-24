@@ -62,7 +62,7 @@ public class RobotContainer {
           modifyDriveInput(controls.getStrafe()),
           modifyTurnInput(controls.getYaw() * 0.7)), robotDrive )
       */
-        new RunCommand(() -> robotDrive.tankOutput(controls.getLeft(), controls.getForward()), robotDrive)    
+        new RunCommand(() -> robotDrive.tankOutput(modifyDriveInput(controls.getLeft()), modifyDriveInput(controls.getForward())), robotDrive)    
           );
       
     arm.setDefaultCommand(
