@@ -62,11 +62,11 @@ public class RobotContainer {
           modifyDriveInput(controls.getStrafe()),
           modifyTurnInput(controls.getYaw() * 0.7)), robotDrive ));
 
-    //arm.setDefaultCommand(
-      //new RunCommand(() -> arm.setElevatorOutput(controls.getElevatorAxis() * 0.25), arm)
+    arm.setDefaultCommand(
+      new RunCommand(() -> arm.setElevatorOutput(0), arm)
 
       //new RunCommand(() -> arm.clawStop(), arm)
-    //);
+    );
      
   }
 
@@ -104,16 +104,15 @@ public class RobotContainer {
       () -> robotDrive.turnSlow = false ));
 
 
-      controls.elevatorManualToggle.whileTrue(new RunCommand(() -> arm.setElevatorOutput(controls.getElevatorAxis() * 0.25), arm));
-
+      controls.elevatorManualToggle.whileTrue(new RunCommand(() -> arm.setElevatorOutput(controls.getElevatorAxis() * 0.35))); //() -> arm.setElevatorOutput(0)));
     
 
     controls.resetDrive.onTrue(new InstantCommand(() -> robotDrive.initDrive()) );
     controls.resetElevator.onTrue(new InstantCommand(() -> arm.initElevator()));
 
-    controls.elevatorLow.onTrue(new InstantCommand(() -> arm.setArmPosition(100))); //.andThen(new InstantCommand(() -> arm.clawOpen())) );
-    controls.elevatorMid.onTrue(new InstantCommand(() -> arm.setArmPosition(500))); //.andThen(new InstantCommand(() -> arm.clawOpen())) );
-    controls.elevatorHigh.onTrue(new InstantCommand(() -> arm.setArmPosition(1000))); //.andThen(new InstantCommand(() -> arm.clawOpen())) );
+    //controls.elevatorLow.whileTrue(new RunCommand(() -> arm.setArmPosition(1))); //.andThen(new InstantCommand(() -> arm.clawOpen())) );
+    //controls.elevatorMid.whileTrue(new RunCommand(() -> arm.setArmPosition(1.5))); //.andThen(new InstantCommand(() -> arm.clawOpen())) );
+    //controls.elevatorHigh.whileTrue(new RunCommand(() -> arm.setArmPosition(1.8))); //.andThen(new InstantCommand(() -> arm.clawOpen())) );
     //controls.elevatorFull.onTrue(new InstantCommand(() -> arm.setArmPosition(some#)));
     //controls.elevatorManualToggle.whileTrue(new RunCommand(() -> arm.setElevatorOutput(controls.getElevatorAxis() * 0.4)));
     
@@ -123,11 +122,11 @@ public class RobotContainer {
       () -> arm.clawClose(),
       () -> arm.clawStop()));
       */
-    controls.clawClose.onTrue(new InstantCommand(() -> arm.clawClose()));
+    controls.clawClose.whileTrue(new StartEndCommand(() -> arm.clawClose(), () -> arm.clawStop()));
       
     controls.clawStop.onTrue(new InstantCommand(() -> arm.clawStop()));//.andThen(() -> arm.clawStop()));
 
-    controls.clawOpen.onTrue(new InstantCommand(() -> arm.clawOpen()));
+    controls.clawOpen.whileTrue(new StartEndCommand(() -> arm.clawOpen(), () -> arm.clawStop()));
 
     
 

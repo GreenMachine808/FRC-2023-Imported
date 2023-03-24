@@ -54,7 +54,7 @@ public class runDrive extends CommandBase{
     public void execute() {
         //hang.popWeightServo(true);
         //new InstantCommand(() -> new runShooter(shooter));
-        Timer.delay(1);
+        Timer.delay(3);
         
         // shooter.getRunShooter().initialize();
         // shooter.getRunShooter().execute();

@@ -196,15 +196,21 @@ public void initElevator(){
 
 	
 	public void setArmPosition(double latSetPos) {
-		//double wheelDim = 3.013;
+		double wheelDim = 3.013/12;
 		//Conversion for lateral Set Position to added rotations needed to achieve correct position
-		//double rotations = (latSetPos / Math.PI) / (12 * Math.cos(Math.toRadians(18.9)) * wheelDim);
+		//double rotations = (latSetPos * wheelDim * 12 / Math.PI) / (Math.cos(Math.toRadians(18.9)));
+		double rotations2 = ((latSetPos / Math.cos(Math.toRadians(18.9))) / (Math.PI * wheelDim));
 		//double rotations = (latSetPos / Math.cos(Math.toRadians(18.9))) / 12 * (wheelDim * Math.PI);
 		
-		//double rawPos = (rotations * kUnitsPerRevolution);
-		double rawPos = latSetPos;
-		elevatorR.follow(elevatorL);
+		double rawPos = (rotations2 * -1); //4096
+		//double rawPos = latSetPos;
+		SmartDashboard.putNumber("RawPos", rawPos);
+		SmartDashboard.putNumber("Rotations", rotations2);
+
+
         elevatorL.set(ControlMode.MotionMagic, rawPos);
+		elevatorR.follow(elevatorL);
+
 		//elevatorR.set(ControlMode.Follower, elevatorL);
 
         //SmartDashboard.putNumber("armSetpoint (rotations)", latSetPos/4096);
