@@ -57,11 +57,14 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     robotDrive.setDefaultCommand(
-      new RunCommand(() -> robotDrive.drive(
+      /* new RunCommand(() -> robotDrive.drive(
           modifyDriveInput(controls.getForward()),
           modifyDriveInput(controls.getStrafe()),
-          modifyTurnInput(controls.getYaw() * 0.7)), robotDrive ));
-
+          modifyTurnInput(controls.getYaw() * 0.7)), robotDrive )
+      */
+        new RunCommand(() -> robotDrive.tankOutput(controls.getLeft(), controls.getForward()), robotDrive)    
+          );
+      
     arm.setDefaultCommand(
       new RunCommand(() -> arm.setElevatorOutput(0), arm)
 

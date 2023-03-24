@@ -228,4 +228,12 @@ public class SwerveSubsystem extends SubsystemBase {
       wheel.zero();
     }
   }
+
+
+  public void tankOutput(double outputLeft, double outputRight ){
+    wheels[0].setDriveOutput(outputLeft);
+    wheels[2].setDriveOutput(outputLeft);
+    wheels[1].setDriveOutput(outputRight);
+    wheels[3].setDriveOutput(outputRight);
+  }
 }
