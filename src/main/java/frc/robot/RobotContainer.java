@@ -57,12 +57,12 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     robotDrive.setDefaultCommand(
-      /* new RunCommand(() -> robotDrive.drive(
+      new RunCommand(() -> robotDrive.drive(
           modifyDriveInput(controls.getForward()),
           modifyDriveInput(controls.getStrafe()),
           modifyTurnInput(controls.getYaw() * 0.7)), robotDrive )
-      */
-        new RunCommand(() -> robotDrive.tankOutput(0,0), robotDrive)
+      
+        //new RunCommand(() -> robotDrive.tankOutput(0,0), robotDrive)
           );
       
     arm.setDefaultCommand(
@@ -148,7 +148,7 @@ public class RobotContainer {
 
     */
 
-    //controls.makeWheelsSideways.onTrue(new InstantCommand(() -> robotDrive.setAllAzimuth(90, 0)));
+    controls.makeWheelsSideways.onTrue(new InstantCommand(() -> robotDrive.setAllAzimuth(90, 0)));
 
     controls.balanceRobotForward.whileTrue(new RunCommand(() -> robotDrive.gyroBalance(false)));
     controls.balanceRobotBackward.whileTrue(new RunCommand(() -> robotDrive.gyroBalance(true)));

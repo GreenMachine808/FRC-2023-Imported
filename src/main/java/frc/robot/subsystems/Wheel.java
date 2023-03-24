@@ -75,7 +75,7 @@ public class Wheel {
 
 		/* set deadband to super small 0.001 (0.1 %).
 			The default deadband is 0.04 (4 %) */
-		driveMotor.configNeutralDeadband(0.001, 30);
+		driveMotor.configNeutralDeadband(0.01, 30);
 
 		/*
 		 * Choose which direction motor should spin during positive
@@ -112,7 +112,7 @@ public class Wheel {
 		driveMotor.config_kD(0, drivekD, 30);
 
 		/* Set acceleration and vcruise velocity - see documentation */
-		driveMotor.configMotionCruiseVelocity(10000, 30);
+		driveMotor.configMotionCruiseVelocity(15000, 30);
 		driveMotor.configMotionAcceleration(6000, 30);
 
 		/* Zero the sensor once on robot boot up */
@@ -143,6 +143,9 @@ public class Wheel {
 
         double azimuthError = Math.IEEEremainder(currentPosition - angle, 360.0);
         azimuthPIDController.setReference(azimuthError / 360.0 * 18 + azimuthMotor.getEncoder().getPosition() + (offsetAngle / 360.0 * 18), ControlType.kSmartMotion);
+        //System.out.println(azimuthError);
+        System.out.println(azimuthError / 360.0 * 18 + azimuthMotor.getEncoder().getPosition() + (offsetAngle / 360.0 * 18));
+
     }
 
     /**
