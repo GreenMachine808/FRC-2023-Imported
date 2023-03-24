@@ -44,7 +44,7 @@ public class Wheel {
     private final TalonFX driveMotor;
     private final CANSparkMax azimuthMotor;
     private final SparkMaxPIDController azimuthPIDController;
-    private final AnalogInput azimuthEncoder;
+    public final AnalogInput azimuthEncoder;
     
     /**
      * This constructs a wheel with supplied azimuth spark, drive falcon, and MA3 encoder.

@@ -28,10 +28,15 @@ import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
+//import com.revrobotics.AnalogInput;
+
+import edu.wpi.first.wpilibj.AnalogInput;
+
+
 import edu.wpi.first.apriltag.AprilTagDetection;
 import edu.wpi.first.apriltag.AprilTagDetector;
 
-
+import frc.robot.subsystems.SwerveSubsystem;
 
 import frc.robot.subsystems.ArmSubsystem;
 import java.util.ArrayList;
@@ -48,6 +53,7 @@ import java.util.ArrayList;
 public class Robot extends TimedRobot {
   private Command autonomousCommand;
   private RobotContainer robotContainer;
+  
   private SendableChooser<Command> auto;
   private final ArmSubsystem arm = new ArmSubsystem();
 
@@ -164,13 +170,31 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+ 
+
+
+
+
   }
 
-  /**
+  /*
    * This function is called periodically during test mode.
    */
+  //AnalogInput ZeroEncoder = new AnalogInput(0);
+  //AnalogInput OneEncoder = new AnalogInput(1);
+  //AnalogInput TwoEncoder = new AnalogInput(2);
+  //AnalogInput ThreeEncoder = new AnalogInput(3);
+
   @Override
   public void testPeriodic() {
+    /* 
+    SmartDashboard.putNumber("1 Encoder",ZeroEncoder.getValue());
+    SmartDashboard.putNumber("2 Encoder",OneEncoder.getValue());
+    SmartDashboard.putNumber("3 Encoder",TwoEncoder.getValue());
+    SmartDashboard.putNumber("4 Encoder",ThreeEncoder.getValue());
+*/
+
+
   }
 
   void apriltagVisionThreadProc() {

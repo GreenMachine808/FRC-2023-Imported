@@ -30,31 +30,31 @@ public final class Constants {
   public static final class SwerveConstants {
     
     // Ratio
-    public static final double robotLength = 1;
+    public static final double robotLength = 1;//change these to real measurements
     public static final double robotWidth = 1;
 
     // Front Left
     public static final int FRONT_LEFT_ANGLE_MOTOR = 24;
     public static final int FRONT_LEFT_DRIVE_MOTOR = 14;
-    public static final double FRONT_LEFT_OFFSET = 85;
+    public static final double FRONT_LEFT_OFFSET = 100;
     public static final int FRONT_LEFT_ENCODER = 3;
 
     // Front Right
     public static final int FRONT_RIGHT_ANGLE_MOTOR = 23;
     public static final int FRONT_RIGHT_DRIVE_MOTOR = 13;
-    public static final double FRONT_RIGHT_OFFSET = 113;
+    public static final double FRONT_RIGHT_OFFSET = 133;
     public static final int FRONT_RIGHT_ENCODER = 2;
 
     // Back Right
     public static final int BACK_RIGHT_ANGLE_MOTOR = 22;
     public static final int BACK_RIGHT_DRIVE_MOTOR = 12;
-    public static final double BACK_RIGHT_OFFSET = 285;
+    public static final double BACK_RIGHT_OFFSET = 105;
     public static final int BACK_RIGHT_ENCODER = 1;
 
     // Back Left
     public static final int BACK_LEFT_ANGLE_MOTOR = 21;
     public static final int BACK_LEFT_DRIVE_MOTOR = 11;
-    public static final double BACK_LEFT_OFFSET = 123;
+    public static final double BACK_LEFT_OFFSET = 348;
     public static final int BACK_LEFT_ENCODER = 0;
 
     // Azimuth PID coefficients
