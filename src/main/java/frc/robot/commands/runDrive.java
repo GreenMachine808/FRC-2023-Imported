@@ -82,7 +82,7 @@ public class runDrive extends CommandBase{
         drive.drive(0, -0.1, 0);
         Timer.delay(1);*/
 
-        drive.driveSetDistance(10, 2);
+        drive.driveSetDistance(6, 2);
         drive.gyroBalanceAuto(5);
         //drive.setAllAzimuth(90, 2);
 

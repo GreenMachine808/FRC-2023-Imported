@@ -24,6 +24,8 @@ public class DriveControls {
 
   public final JoystickButton slowTurnMode = new JoystickButton(joystick1, 2);
   
+  public final JoystickButton tankEnable = new JoystickButton(joystick0, 1);
+
   
   public double getForward() { return -joystick0.getRawAxis(1); }
   public double getStrafe() { return joystick0.getRawAxis(0); }

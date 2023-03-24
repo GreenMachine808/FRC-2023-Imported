@@ -112,7 +112,7 @@ public class Wheel {
 		driveMotor.config_kD(0, drivekD, 30);
 
 		/* Set acceleration and vcruise velocity - see documentation */
-		driveMotor.configMotionCruiseVelocity(15000, 30);
+		driveMotor.configMotionCruiseVelocity(10000, 30);
 		driveMotor.configMotionAcceleration(6000, 30);
 
 		/* Zero the sensor once on robot boot up */

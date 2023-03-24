@@ -62,7 +62,7 @@ public class RobotContainer {
           modifyDriveInput(controls.getStrafe()),
           modifyTurnInput(controls.getYaw() * 0.7)), robotDrive )
       */
-        new RunCommand(() -> robotDrive.tankOutput(modifyDriveInput(controls.getLeft()), modifyDriveInput(controls.getForward())), robotDrive)    
+        new RunCommand(() -> robotDrive.tankOutput(0,0), robotDrive)
           );
       
     arm.setDefaultCommand(
@@ -131,7 +131,8 @@ public class RobotContainer {
 
     controls.clawOpen.whileTrue(new StartEndCommand(() -> arm.clawOpen(), () -> arm.clawStop()));
 
-    
+    controls.tankEnable.whileTrue(new RunCommand(() -> robotDrive.tankOutput(modifyDriveInput(controls.getLeft()), modifyDriveInput(controls.getForward())), robotDrive));    
+
 
     /* controls.dropElevator0_0.whileHeld(new RunCommand(
       () -> hang.popWeightServo(true) ));
