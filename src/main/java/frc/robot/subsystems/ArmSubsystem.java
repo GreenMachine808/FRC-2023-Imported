@@ -251,7 +251,7 @@ public void initElevator(){
 
 	//claw.set(ControlMode.MotionMagic, claw.getSelectedSensorPosition());//claw.getSelectedSensorPosition());
 
-	claw.set(ControlMode.PercentOutput, 0);
+	claw.set(ControlMode.Position, claw.getSelectedSensorPosition());
 	}
   
   

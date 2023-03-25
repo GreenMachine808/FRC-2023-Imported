@@ -66,7 +66,7 @@ public class RobotContainer {
           );
       
     arm.setDefaultCommand(
-      new RunCommand(() -> arm.setElevatorOutput(0), arm)
+      new RunCommand(() -> arm.clawStop(), arm)
 
       //new RunCommand(() -> arm.clawStop(), arm)
     );
@@ -125,11 +125,11 @@ public class RobotContainer {
       () -> arm.clawClose(),
       () -> arm.clawStop()));
       */
-    controls.clawClose.whileTrue(new StartEndCommand(() -> arm.clawClose(), () -> arm.clawStop()));
+    controls.clawClose.whileTrue(new RunCommand(() -> arm.clawClose()));// , () -> arm.clawStop()));
       
     controls.clawStop.onTrue(new InstantCommand(() -> arm.clawStop()));//.andThen(() -> arm.clawStop()));
 
-    controls.clawOpen.whileTrue(new StartEndCommand(() -> arm.clawOpen(), () -> arm.clawStop()));
+    controls.clawOpen.whileTrue(new RunCommand(() -> arm.clawOpen()));//, () -> arm.clawStop()));
 
     controls.tankEnable.whileTrue(new RunCommand(() -> robotDrive.tankOutput(modifyDriveInput(controls.getLeft()), modifyDriveInput(controls.getForward())), robotDrive));    
 

@@ -42,13 +42,13 @@ public final class Constants {
     // Front Right
     public static final int FRONT_RIGHT_ANGLE_MOTOR = 23;
     public static final int FRONT_RIGHT_DRIVE_MOTOR = 13;
-    public static final double FRONT_RIGHT_OFFSET = 218;
+    public static final double FRONT_RIGHT_OFFSET = 13;
     public static final int FRONT_RIGHT_ENCODER = 2;
 
     // Back Right
     public static final int BACK_RIGHT_ANGLE_MOTOR = 22;
     public static final int BACK_RIGHT_DRIVE_MOTOR = 12;
-    public static final double BACK_RIGHT_OFFSET = 135;
+    public static final double BACK_RIGHT_OFFSET = 115;
     public static final int BACK_RIGHT_ENCODER = 1;
 
     // Back Left
@@ -92,7 +92,7 @@ public final class Constants {
   public static final class ArmConstants {
     //Claw PID coefficients, for changing if need be
   public static final double clawkP = 0.2;
-  public static final double clawkI = 0.00;
+  public static final double clawkI = 0.02;
   public static final double clawkD = 0;
   public static final double clawIz = 0;
   public static final double clawkFF = 0.000;
