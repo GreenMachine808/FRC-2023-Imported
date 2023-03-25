@@ -11,7 +11,7 @@ import frc.robot.subsystems.SwerveSubsystem;
 import edu.wpi.first.wpilibj.Timer;
 import com.kauailabs.navx.frc.AHRS;
 
-public class runBalance extends CommandBase{
+public class runNothing extends CommandBase{
     // private ArmSubsystem arm;
     // private ShooterSubsystem shooter;
     private SwerveSubsystem drive;
@@ -20,7 +20,7 @@ public class runBalance extends CommandBase{
     
     private Timer timer = new Timer();
 
-    public runBalance(ArmSubsystem arm, ShooterSubsystem shooter, SwerveSubsystem drive){
+    public runNothing(ArmSubsystem arm, ShooterSubsystem shooter, SwerveSubsystem drive){
         // this.hang = hang;
         // this.shooter = shooter;
         this.drive = drive;
@@ -54,7 +54,7 @@ public class runBalance extends CommandBase{
     public void execute() {
         //hang.popWeightServo(true);
         //new InstantCommand(() -> new runShooter(shooter));
-        Timer.delay(1);
+        Timer.delay(3);
         
         // shooter.getRunShooter().initialize();
         // shooter.getRunShooter().execute();
@@ -82,9 +82,9 @@ public class runBalance extends CommandBase{
         drive.drive(0, -0.1, 0);
         Timer.delay(1);*/
 
-        drive.driveSetDistance(6, 2);
-        drive.gyroBalanceAuto(8);
-        drive.setAllAzimuth(90, 2);
+        //drive.driveSetDistance(6, 2);
+        //drive.gyroBalanceAuto(5);
+        //drive.setAllAzimuth(90, 2);
 
     
  
